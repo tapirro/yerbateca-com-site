@@ -1,0 +1,44 @@
+[
+  {
+    "id": "una-de-gato",
+    "nombre_comun": "Uña de Gato",
+    "nombres_alt": ["Cat's Claw", "Samento", "Garabato"],
+    "nombre_cientifico": "Uncaria tomentosa",
+    "familia": "Rubiaceae",
+    "origen": "Amazonia",
+    "regiones": ["PE", "CO", "EC", "BR", "BO"],
+    "partes_usadas": ["corteza", "raíz"],
+    "compuestos_activos": ["alcaloides oxindólicos", "taninos", "esteroles vegetales", "glicósidos del ácido quinóvico"],
+    "usos_tradicionales": ["antiinflamatorio", "inmunoestimulante", "antiviral", "antiartrítico"],
+    "estado": "draft",
+    "calidad_score": 0.0
+  },
+  {
+    "id": "maca",
+    "nombre_comun": "Maca",
+    "nombres_alt": ["Maca peruana", "Lepidium meyenii", "Ginseng peruano"],
+    "nombre_cientifico": "Lepidium meyenii",
+    "familia": "Brassicaceae",
+    "origen": "Andes",
+    "regiones": ["PE", "BO"],
+    "partes_usadas": ["raíz (hipocótilo)"],
+    "compuestos_activos": ["macamidas", "macaenos", "glucosinolatos", "alcaloides (macaridina)"],
+    "usos_tradicionales": ["energizante", "fertilidad", "adaptógeno", "regulador hormonal"],
+    "estado": "draft",
+    "calidad_score": 0.0
+  },
+  {
+    "id": "coca",
+    "nombre_comun": "Coca",
+    "nombres_alt": ["Hoja de coca", "Mama Coca"],
+    "nombre_cientifico": "Erythroxylum coca",
+    "familia": "Erythroxylaceae",
+    "origen": "Andes",
+    "regiones": ["PE", "BO", "CO"],
+    "partes_usadas": ["hojas"],
+    "compuestos_activos": ["cocaína (alcaloide natural)", "ecgonina", "flavonoides", "vitaminas A, B, C, E"],
+    "usos_tradicionales": ["mal de altura", "energizante", "digestivo", "analgésico", "ceremonial"],
+    "estado": "draft",
+    "calidad_score": 0.0
+  }
+]
