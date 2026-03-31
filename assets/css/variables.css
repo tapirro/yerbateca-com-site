@@ -1,0 +1,81 @@
+/* ═══════════════════════════════════════════════════════
+   Yerbateca Design Tokens
+   Botanical encyclopedia — aged paper, warm tones
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Page & Surfaces ── */
+  --bg-page:       #DACCB2;
+  --bg-card:       #E1D9C4;
+  --bg-sidebar:    #D6CDB5;
+  --bg-highlight:  #D9D1BA;
+  --bg-footer:     #2C1810;
+  --bg-nav:        #2C1810;
+
+  /* ── Ink ── */
+  --ink:           #2C1810;
+  --ink-secondary: #5C4A3A;
+  --ink-muted:     #8A7A6A;
+  --ink-faint:     #A89A8A;
+  --ink-inverse:   #DACCB2;
+
+  /* ── Accents ── */
+  --accent:        #4A6741;     /* Botanical green */
+  --accent-hover:  #5D8251;
+  --accent-warm:   #8B6914;     /* Gold / amber */
+  --accent-warm-h: #A07D28;
+  --accent-sepia:  #5C4A3A;     /* Sepia for captions */
+
+  /* ── Borders ── */
+  --border:        #CABFA4;
+  --border-light:  #D4CAB8;
+  --border-strong: #B5AA8E;
+
+  /* ── Semantic ── */
+  --safe:          #4A6741;
+  --caution:       #A67B25;
+  --danger:        #8B3A2A;
+
+  /* ── Region Colors (muted, botanical) ── */
+  --region-andes:       #4A6741;
+  --region-amazonia:    #8B6914;
+  --region-caribe:      #3A6A7A;
+  --region-mesoamerica: #8B4A2A;
+  --region-mexico:      #6A4A6A;
+  --region-pantropical: #6A7A4A;
+
+  /* ── Typography ── */
+  --font-heading: 'Newsreader', 'Georgia', serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-latin:   'Cormorant Garamond', 'Georgia', serif;
+
+  /* ── Type Scale (1.25 ratio) ── */
+  --text-xs:   0.72rem;   /* 11.5px */
+  --text-sm:   0.85rem;   /* 13.6px */
+  --text-base: 1rem;      /* 16px */
+  --text-lg:   1.125rem;  /* 18px */
+  --text-xl:   1.35rem;   /* 21.6px */
+  --text-2xl:  1.7rem;    /* 27px */
+  --text-3xl:  2.1rem;    /* 33.6px */
+  --text-4xl:  2.75rem;   /* 44px */
+
+  /* ── Spacing ── */
+  --sp-xs:  0.25rem;
+  --sp-sm:  0.5rem;
+  --sp-md:  1rem;
+  --sp-lg:  1.5rem;
+  --sp-xl:  2.5rem;
+  --sp-2xl: 4rem;
+  --sp-3xl: 6rem;
+
+  /* ── Layout ── */
+  --max-width:    1120px;
+  --max-content:  720px;
+  --sidebar-w:    320px;
+  --radius:       3px;
+  --radius-lg:    6px;
+
+  /* ── Transitions ── */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration: 200ms;
+}

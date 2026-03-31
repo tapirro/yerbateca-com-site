@@ -1,0 +1,10 @@
+/* Print stylesheet */
+@media print {
+  .site-nav, .site-footer, .lightbox, .mini-map { display: none; }
+  body { background: white; color: #000; font-size: 11pt; line-height: 1.6; }
+  .illustration { mix-blend-mode: normal; }
+  .illustration-side { float: right; width: 40%; }
+  a[href]::after { content: ' (' attr(href) ')'; font-size: 0.8em; color: #666; }
+  .plant-card { break-inside: avoid; }
+  h2 { page-break-after: avoid; }
+}
