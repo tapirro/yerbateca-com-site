@@ -5,10 +5,10 @@
 
 :root {
   /* ── Page & Surfaces ── */
-  --bg-page:       #DACCB2;
-  --bg-card:       #E1D9C4;
-  --bg-sidebar:    #D6CDB5;
-  --bg-highlight:  #D9D1BA;
+  --bg-page:       #F0E8D8;
+  --bg-card:       #F5EFE2;
+  --bg-sidebar:    #EBE3D3;
+  --bg-highlight:  #E8E0CE;
   --bg-footer:     #2C1810;
   --bg-nav:        #2C1810;
 
@@ -17,7 +17,7 @@
   --ink-secondary: #5C4A3A;
   --ink-muted:     #8A7A6A;
   --ink-faint:     #A89A8A;
-  --ink-inverse:   #DACCB2;
+  --ink-inverse:   #F0E8D8;
 
   /* ── Accents ── */
   --accent:        #4A6741;     /* Botanical green */
@@ -27,9 +27,9 @@
   --accent-sepia:  #5C4A3A;     /* Sepia for captions */
 
   /* ── Borders ── */
-  --border:        #CABFA4;
-  --border-light:  #D4CAB8;
-  --border-strong: #B5AA8E;
+  --border:        #D4C4A8;
+  --border-light:  #E2D6C0;
+  --border-strong: #BCA882;
 
   /* ── Semantic ── */
   --safe:          #4A6741;
@@ -45,7 +45,7 @@
   --region-pantropical: #6A7A4A;
 
   /* ── Typography ── */
-  --font-heading: 'Newsreader', 'Georgia', serif;
+  --font-heading: 'Cormorant Garamond', 'Georgia', serif;
   --font-body:    'Inter', system-ui, -apple-system, sans-serif;
   --font-latin:   'Cormorant Garamond', 'Georgia', serif;
 

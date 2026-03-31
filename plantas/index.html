@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Plantas Medicinales — Yerbateca</title>
 <meta name="description" content="512 plantas medicinales de América Latina">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <link rel="canonical" href="https://yerbateca.com/plantas/">
 <meta property="og:title" content="Plantas Medicinales">
 <meta property="og:description" content="512 plantas medicinales de América Latina">
@@ -843,6 +843,139 @@ p + p { margin-top: var(--sp-sm); }
   .stats-row { flex-direction: column; gap: var(--sp-md); }
 }
 
+/* ── Search ── */
+.search-box {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto var(--sp-xl);
+}
+.search-box input {
+  width: 100%;
+  padding: var(--sp-sm) var(--sp-lg) var(--sp-sm) 2.5rem;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  background: var(--bg-card);
+  color: var(--ink);
+  outline: none;
+  transition: border-color var(--duration) var(--ease);
+}
+.search-box input:focus { border-color: var(--accent); }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-box .search-icon {
+  position: absolute;
+  left: var(--sp-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-faint);
+  width: 18px;
+  height: 18px;
+}
+.search-results {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-top: var(--sp-xs);
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 200;
+  box-shadow: 0 8px 24px rgba(44,24,16,0.12);
+}
+.search-results.active { display: block; }
+.search-result {
+  display: block;
+  padding: var(--sp-sm) var(--sp-lg);
+  border-bottom: 1px solid var(--border-light);
+  transition: background var(--duration) var(--ease);
+}
+.search-result:last-child { border-bottom: none; }
+.search-result:hover { background: var(--bg-highlight); }
+.search-result .sr-name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--text-base);
+}
+.search-result .sr-latin {
+  font-family: var(--font-latin);
+  font-style: italic;
+  font-size: var(--text-sm);
+  color: var(--accent-sepia);
+}
+
+/* ── Alphabet Nav ── */
+.alpha-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: var(--sp-lg);
+}
+.alpha-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-secondary);
+  transition: all var(--duration) var(--ease);
+}
+.alpha-nav a:hover { background: var(--bg-highlight); color: var(--ink); }
+.alpha-nav a.empty { opacity: 0.3; pointer-events: none; }
+.alpha-anchor { scroll-margin-top: 70px; }
+
+/* ── Prev/Next ── */
+.plant-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--sp-xl);
+  padding-top: var(--sp-lg);
+  border-top: 1px solid var(--border-light);
+  gap: var(--sp-md);
+}
+.plant-nav a {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  color: var(--ink-secondary);
+  font-size: var(--text-sm);
+  transition: color var(--duration) var(--ease);
+  max-width: 45%;
+}
+.plant-nav a:hover { color: var(--accent); }
+.plant-nav .pn-label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+}
+.plant-nav .pn-name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--text-base);
+}
+.plant-nav .pn-next { text-align: right; }
+
+/* ── Plant mini-map ── */
+.plant-minimap {
+  max-width: 120px;
+  margin: var(--sp-sm) 0;
+}
+@media (max-width: 768px) {
+  .plant-minimap { max-width: 80px; }
+  .alpha-nav a { width: 28px; height: 28px; font-size: var(--text-xs); }
+}
+
 ::selection { background: var(--accent); color: var(--ink-inverse); }
 </style>
 </head>
@@ -862,15 +995,21 @@ p + p { margin-top: var(--sp-sm); }
   <div class="breadcrumb"><a href="../">Inicio</a><span class="sep">&#8250;</span><span>Plantas</span></div>
   <div class="page-content" style="max-width:var(--max-width);">
     <h1>Plantas Medicinales</h1>
-    <p style="color:var(--ink-secondary);margin-bottom:var(--sp-xl);">
+    <p style="color:var(--ink-secondary);margin-bottom:var(--sp-md);">
       512 monograf&iacute;as de plantas medicinales tradicionales de Am&eacute;rica Latina.
     </p>
-    <div class="plant-grid"><a href="../plantas/abuta-grandifolia/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/abuta-grandifolia/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Abuta"
-             loading="lazy" decoding="async">
-      </div>
+
+    <div class="search-box">
+  <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+  <input type="text" class="search-input" placeholder="Buscar planta..." data-root="../" autocomplete="off">
+  <div class="search-results"></div>
+</div>
+
+    <div class="alpha-nav"><a href="#letter-A">A</a><a href="#letter-B">B</a><a href="#letter-C">C</a><a href="#letter-D">D</a><a href="#letter-E">E</a><a href="#letter-F">F</a><a href="#letter-G">G</a><a href="#letter-H">H</a><a href="#letter-I">I</a><a href="#letter-J">J</a><a href="#letter-K">K</a><a href="#letter-L">L</a><a href="#letter-M">M</a><a href="#letter-N">N</a><a href="#letter-O">O</a><a href="#letter-P">P</a><a href="#letter-Q">Q</a><a href="#letter-R">R</a><a href="#letter-S">S</a><a href="#letter-T">T</a><a href="#letter-U">U</a><a href="#letter-V">V</a><a class="empty">W</a><a class="empty">X</a><a href="#letter-Y">Y</a><a href="#letter-Z">Z</a></div>
+
+    <div class="plant-grid"><div class="alpha-anchor" id="letter-A" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">A</h3></div>
+<a href="../plantas/abuta-grandifolia/" class="plant-card">
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Abuta</div>
     <div class="card-latin"><em>Abuta grandifolia</em></div>
@@ -892,7 +1031,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/achiote/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/achiote/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Achiote"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Achiote</div>
     <div class="card-latin"><em>Bixa orellana</em></div>
@@ -903,11 +1046,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/canna-indica/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/canna-indica/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Achira"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Achira</div>
     <div class="card-latin"><em>Canna indica</em></div>
@@ -918,11 +1057,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/agave-tequilana/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/agave-tequilana/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Agave azul"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Agave azul</div>
     <div class="card-latin"><em>Agave tequilana</em></div>
@@ -955,11 +1090,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/aguaymanto/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/aguaymanto/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Aguaymanto"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Aguaymanto</div>
     <div class="card-latin"><em>Physalis peruviana</em></div>
@@ -1212,7 +1343,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/ayahuasca/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/ayahuasca/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Ayahuasca"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Ayahuasca</div>
     <div class="card-latin"><em>Banisteriopsis caapi</em></div>
@@ -1244,6 +1379,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-B" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">B</h3></div>
 <a href="../plantas/orbignya-phalerata/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -1344,11 +1480,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/berberina/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/berberina/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Berberina"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Berberina</div>
     <div class="card-latin"><em>Berberis vulgaris (source)</em></div>
@@ -1382,7 +1514,7 @@ p + p { margin-top: var(--sp-sm); }
 </a>
 <a href="../plantas/boldo/" class="plant-card">
   <div class="card-image">
-        <img src="../assets/img/plants/boldo/thumb.png"
+        <img src="../assets/img/plantas/boldo/thumb.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de Boldo"
              loading="lazy" decoding="async">
       </div>
@@ -1461,6 +1593,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-C" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">C</h3></div>
 <a href="../plantas/calliandra-houstoniana/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -1617,7 +1750,7 @@ p + p { margin-top: var(--sp-sm); }
 </a>
 <a href="../plantas/camu-camu/" class="plant-card">
   <div class="card-image">
-        <img src="../assets/img/plants/camu-camu/thumb.png"
+        <img src="../assets/img/plantas/camu-camu/thumb.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de Camu camu"
              loading="lazy" decoding="async">
       </div>
@@ -1642,7 +1775,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/canela-ceilan/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/canela-ceilan/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Canela de Ceilán"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Canela de Ceilán</div>
     <div class="card-latin"><em>Cinnamomum verum</em></div>
@@ -2005,7 +2142,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/chanca-piedra/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/chanca-piedra/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Chanca piedra"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Chanca piedra</div>
     <div class="card-latin"><em>Phyllanthus niruri</em></div>
@@ -2082,11 +2223,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/argemone-mexicana/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/argemone-mexicana/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Chicalote"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Chicalote</div>
     <div class="card-latin"><em>Argemone mexicana</em></div>
@@ -2163,7 +2300,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/chiric-sanango/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/chiric-sanango/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Chiric sanango"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Chiric sanango</div>
     <div class="card-latin"><em>Brunfelsia grandiflora</em></div>
@@ -2603,11 +2744,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/adiantum-capillus-veneris/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/adiantum-capillus-veneris/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Culantrillo"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Culantrillo</div>
     <div class="card-latin"><em>Adiantum capillus-veneris</em></div>
@@ -2651,7 +2788,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/chondrodendron-tomentosum/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/chondrodendron-tomentosum/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Curare"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Curare</div>
     <div class="card-latin"><em>Chondrodendron tomentosum</em></div>
@@ -2673,7 +2814,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/curcuma/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/curcuma/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Cúrcuma"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Cúrcuma</div>
     <div class="card-latin"><em>Curcuma longa</em></div>
@@ -2683,6 +2828,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-D" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">D</h3></div>
 <a href="../plantas/turnera-diffusa/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -2738,6 +2884,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-E" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">E</h3></div>
 <a href="../plantas/virola-theiodora/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -2772,11 +2919,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/sida-rhombifolia/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/sida-rhombifolia/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Escoba"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Escoba</div>
     <div class="card-latin"><em>Sida rhombifolia</em></div>
@@ -2787,11 +2930,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/sida-acuta/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/sida-acuta/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Escoba de castilla"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Escoba de castilla</div>
     <div class="card-latin"><em>Sida acuta</em></div>
@@ -2846,11 +2985,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/artemisia-ludoviciana/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/artemisia-ludoviciana/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Estafiate"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Estafiate</div>
     <div class="card-latin"><em>Artemisia ludoviciana</em></div>
@@ -2860,6 +2995,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-F" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">F</h3></div>
 <a href="../plantas/dimorphandra-mollis/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -2883,7 +3019,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/chiranthodendron-pentadactylon/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/chiranthodendron-pentadactylon/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Flor de manita"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Flor de manita</div>
     <div class="card-latin"><em>Chiranthodendron pentadactylon</em></div>
@@ -2894,11 +3034,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/asclepias-curassavica/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/asclepias-curassavica/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Flor de muerto"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Flor de muerto</div>
     <div class="card-latin"><em>Asclepias curassavica</em></div>
@@ -2909,11 +3045,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/aristolochia-grandiflora/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/aristolochia-grandiflora/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Flor de pato"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Flor de pato</div>
     <div class="card-latin"><em>Aristolochia grandiflora</em></div>
@@ -2967,6 +3099,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-G" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">G</h3></div>
 <a href="../plantas/duranta-erecta/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -2990,11 +3123,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/helianthus-annuus/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/helianthus-annuus/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Girasol"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Girasol</div>
     <div class="card-latin"><em>Helianthus annuus</em></div>
@@ -3061,7 +3190,7 @@ p + p { margin-top: var(--sp-sm); }
 </a>
 <a href="../plantas/graviola/" class="plant-card">
   <div class="card-image">
-        <img src="../assets/img/plants/graviola/thumb.png"
+        <img src="../assets/img/plantas/graviola/thumb.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de Graviola"
              loading="lazy" decoding="async">
       </div>
@@ -3086,11 +3215,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/aristolochia-serpentaria/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/aristolochia-serpentaria/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Guaco"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Guaco</div>
     <div class="card-latin"><em>Aristolochia serpentaria</em></div>
@@ -3234,7 +3359,7 @@ p + p { margin-top: var(--sp-sm); }
 </a>
 <a href="../plantas/guayusa/" class="plant-card">
   <div class="card-image">
-        <img src="../assets/img/plants/guayusa/thumb.png"
+        <img src="../assets/img/plantas/guayusa/thumb.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de Guayusa"
              loading="lazy" decoding="async">
       </div>
@@ -3291,6 +3416,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-H" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">H</h3></div>
 <a href="../plantas/capsicum-chinense/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -3325,11 +3451,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/hercampuri/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/hercampuri/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Hercampuri"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Hercampuri</div>
     <div class="card-latin"><em>Gentianella alborosea</em></div>
@@ -3347,6 +3469,17 @@ p + p { margin-top: var(--sp-sm); }
     <div class="card-meta">
       <span class="badge badge-family">Asteraceae</span>
       <span class="region-tag region-mexico">México</span>
+    </div>
+  </div>
+</a>
+<a href="../plantas/euphorbia-hirta/" class="plant-card">
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-body">
+    <div class="card-title">Hierba de la golondrina</div>
+    <div class="card-latin"><em>Euphorbia hirta</em></div>
+    <div class="card-meta">
+      <span class="badge badge-family">Euphorbiaceae</span>
+      
     </div>
   </div>
 </a>
@@ -3372,21 +3505,6 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
-<a href="../plantas/euphorbia-hirta/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/euphorbia-hirta/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Hierba de la golondrina"
-             loading="lazy" decoding="async">
-      </div>
-  <div class="card-body">
-    <div class="card-title">Hierba de la golondrina</div>
-    <div class="card-latin"><em>Euphorbia hirta</em></div>
-    <div class="card-meta">
-      <span class="badge badge-family">Euphorbiaceae</span>
-      
-    </div>
-  </div>
-</a>
 <a href="../plantas/tridax-procumbens/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -3399,11 +3517,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/acalypha-arvensis/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/acalypha-arvensis/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Hierba del cáncer"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Hierba del cáncer</div>
     <div class="card-latin"><em>Acalypha arvensis</em></div>
@@ -3447,11 +3561,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/eryngium-carlinae/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/eryngium-carlinae/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Hierba del sapo"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Hierba del sapo</div>
     <div class="card-latin"><em>Eryngium carlinae</em></div>
@@ -3495,7 +3605,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/hierba-luisa/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/hierba-luisa/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Hierba luisa"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Hierba luisa</div>
     <div class="card-latin"><em>Aloysia citriodora</em></div>
@@ -3517,11 +3631,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/solanum-americanum/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/solanum-americanum/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Hierba mora"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Hierba mora</div>
     <div class="card-latin"><em>Solanum americanum</em></div>
@@ -3555,7 +3665,7 @@ p + p { margin-top: var(--sp-sm); }
 </a>
 <a href="../plantas/coca/" class="plant-card">
   <div class="card-image">
-        <img src="../assets/img/plants/coca/thumb.png"
+        <img src="../assets/img/plantas/coca/thumb.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de Hoja de coca"
              loading="lazy" decoding="async">
       </div>
@@ -3646,7 +3756,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/chenopodium-nuttalliae/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/chenopodium-nuttalliae/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Huauzontle"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Huauzontle</div>
     <div class="card-latin"><em>Chenopodium nuttalliae</em></div>
@@ -3679,11 +3793,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/acacia-farnesiana/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/acacia-farnesiana/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Huizache"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Huizache</div>
     <div class="card-latin"><em>Acacia farnesiana</em></div>
@@ -3693,6 +3803,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-I" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">I</h3></div>
 <a href="../plantas/chrysobalanus-icaco/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -3727,11 +3838,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/euphorbia-lancifolia/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/euphorbia-lancifolia/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Ixbut"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Ixbut</div>
     <div class="card-latin"><em>Euphorbia lancifolia</em></div>
@@ -3741,6 +3848,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-J" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">J</h3></div>
 <a href="../plantas/hura-crepitans/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -3775,11 +3883,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/pilocarpus-jaborandi/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/pilocarpus-jaborandi/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Jaborandi"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Jaborandi</div>
     <div class="card-latin"><em>Pilocarpus jaborandi</em></div>
@@ -3845,11 +3949,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/acmella-oleracea/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/acmella-oleracea/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Jambú"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Jambú</div>
     <div class="card-latin"><em>Acmella oleracea</em></div>
@@ -4002,6 +4102,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-K" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">K</h3></div>
 <a href="../plantas/piper-methysticum/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -4014,7 +4115,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/kiwicha/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/kiwicha/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Kiwicha"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Kiwicha</div>
     <div class="card-latin"><em>Amaranthus caudatus</em></div>
@@ -4024,6 +4129,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-L" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">L</h3></div>
 <a href="../plantas/vismia-guianensis/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -4200,9 +4306,10 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-M" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">M</h3></div>
 <a href="../plantas/maca/" class="plant-card">
   <div class="card-image">
-        <img src="../assets/img/plants/maca/thumb.png"
+        <img src="../assets/img/plantas/maca/thumb.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de Maca"
              loading="lazy" decoding="async">
       </div>
@@ -4227,11 +4334,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/agave-americana/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/agave-americana/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Maguey"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Maguey</div>
     <div class="card-latin"><em>Agave americana</em></div>
@@ -4429,11 +4532,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/achyrocline-satureioides/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/achyrocline-satureioides/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Marcela"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Marcela</div>
     <div class="card-latin"><em>Achyrocline satureioides</em></div>
@@ -4499,11 +4598,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/lepidium-didymum/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/lepidium-didymum/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Mastuerzo"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Mastuerzo</div>
     <div class="card-latin"><em>Lepidium didymum</em></div>
@@ -4525,7 +4620,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/matico/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/matico/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Matico"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Matico</div>
     <div class="card-latin"><em>Piper aduncum</em></div>
@@ -4591,11 +4690,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/achillea-millefolium/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/achillea-millefolium/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Milenrama"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Milenrama</div>
     <div class="card-latin"><em>Achillea millefolium</em></div>
@@ -4738,7 +4833,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/muna/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/muna/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Muña"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Muña</div>
     <div class="card-latin"><em>Minthostachys mollis</em></div>
@@ -4759,6 +4858,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-N" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">N</h3></div>
 <a href="../plantas/byrsonima-crassifolia/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -4804,11 +4904,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/juglans-neotropica/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/juglans-neotropica/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Nogal"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Nogal</div>
     <div class="card-latin"><em>Juglans neotropica</em></div>
@@ -4819,7 +4915,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/noni/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/noni/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Noni"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Noni</div>
     <div class="card-latin"><em>Morinda citrifolia</em></div>
@@ -4851,6 +4951,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-O" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">O</h3></div>
 <a href="../plantas/oca/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -4874,11 +4975,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/abelmoschus-esculentus/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/abelmoschus-esculentus/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Okra"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Okra</div>
     <div class="card-latin"><em>Abelmoschus esculentus</em></div>
@@ -4976,6 +5073,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-P" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">P</h3></div>
 <a href="../plantas/chenopodium-ambrosioides/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -4988,7 +5086,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/paico/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/paico/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Paico"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Paico</div>
     <div class="card-latin"><em>Dysphania ambrosioides</em></div>
@@ -5076,7 +5178,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/cestrum-parqui/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/cestrum-parqui/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Palqui"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Palqui</div>
     <div class="card-latin"><em>Cestrum parqui</em></div>
@@ -5098,11 +5204,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/carica-papaya/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/carica-papaya/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Papaya"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Papaya</div>
     <div class="card-latin"><em>Carica papaya</em></div>
@@ -5169,7 +5271,7 @@ p + p { margin-top: var(--sp-sm); }
 </a>
 <a href="../plantas/pasuchaca/" class="plant-card">
   <div class="card-image">
-        <img src="../assets/img/plants/pasuchaca/thumb.png"
+        <img src="../assets/img/plantas/pasuchaca/thumb.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de Pasuchaca"
              loading="lazy" decoding="async">
       </div>
@@ -5479,6 +5581,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-Q" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">Q</h3></div>
 <a href="../plantas/aspidosperma-quebracho-blanco/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -5513,11 +5616,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/chenopodium-album/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/chenopodium-album/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Quelite cenizo"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Quelite cenizo</div>
     <div class="card-latin"><em>Chenopodium album</em></div>
@@ -5561,11 +5660,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/cinchona-officinalis/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/cinchona-officinalis/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Quina"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Quina</div>
     <div class="card-latin"><em>Cinchona officinalis</em></div>
@@ -5576,11 +5671,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/cinchona-calisaya/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/cinchona-calisaya/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Quina amarilla"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Quina amarilla</div>
     <div class="card-latin"><em>Cinchona calisaya</em></div>
@@ -5591,11 +5682,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/cinchona-pubescens/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/cinchona-pubescens/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Quina roja"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Quina roja</div>
     <div class="card-latin"><em>Cinchona pubescens</em></div>
@@ -5607,7 +5694,7 @@ p + p { margin-top: var(--sp-sm); }
 </a>
 <a href="../plantas/quinoa/" class="plant-card">
   <div class="card-image">
-        <img src="../assets/img/plants/quinoa/thumb.png"
+        <img src="../assets/img/plantas/quinoa/thumb.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de Quinoa"
              loading="lazy" decoding="async">
       </div>
@@ -5620,6 +5707,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-R" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">R</h3></div>
 <a href="../plantas/brosimum-alicastrum/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -5687,11 +5775,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/ruta-graveolens/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/ruta-graveolens/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Ruda"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Ruda</div>
     <div class="card-latin"><em>Ruta graveolens</em></div>
@@ -5701,6 +5785,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-S" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">S</h3></div>
 <a href="../plantas/sachaculantro/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -5714,7 +5799,7 @@ p + p { margin-top: var(--sp-sm); }
 </a>
 <a href="../plantas/sacha-inchi/" class="plant-card">
   <div class="card-image">
-        <img src="../assets/img/plants/sacha-inchi/thumb.png"
+        <img src="../assets/img/plantas/sacha-inchi/thumb.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de Sacha inchi"
              loading="lazy" decoding="async">
       </div>
@@ -5772,7 +5857,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/sangre-de-drago/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/sangre-de-drago/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Sangre de drago"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Sangre de drago</div>
     <div class="card-latin"><em>Croton lechleri</em></div>
@@ -5980,6 +6069,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-T" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">T</h3></div>
 <a href="../plantas/caesalpinia-pulcherrima/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -6025,7 +6115,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/tarwi/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/tarwi/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Tarwi"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Tarwi</div>
     <div class="card-latin"><em>Lupinus mutabilis</em></div>
@@ -6058,7 +6152,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/chloroleucon-tortum/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/chloroleucon-tortum/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Tataré"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Tataré</div>
     <div class="card-latin"><em>Chloroleucon tortum</em></div>
@@ -6102,11 +6200,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/tilia-americana-var-mexicana/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/tilia-americana-var-mexicana/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Tila"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Tila</div>
     <div class="card-latin"><em>Tilia americana var. mexicana</em></div>
@@ -6216,11 +6310,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/gaultheria-erecta/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/gaultheria-erecta/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Toronjil de altura"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Toronjil de altura</div>
     <div class="card-latin"><em>Gaultheria erecta</em></div>
@@ -6286,7 +6376,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/tuna/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/tuna/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Tuna"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Tuna</div>
     <div class="card-latin"><em>Opuntia ficus-indica</em></div>
@@ -6308,11 +6402,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/ilex-kunthiana/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/ilex-kunthiana/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Té de Bogotá"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Té de Bogotá</div>
     <div class="card-latin"><em>Ilex kunthiana</em></div>
@@ -6322,6 +6412,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-U" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">U</h3></div>
 <a href="../plantas/virola-sebifera/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -6379,7 +6470,7 @@ p + p { margin-top: var(--sp-sm); }
 </a>
 <a href="../plantas/una-de-gato/" class="plant-card">
   <div class="card-image">
-        <img src="../assets/img/plants/una-de-gato/thumb.png"
+        <img src="../assets/img/plantas/una-de-gato/thumb.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de Uña de gato"
              loading="lazy" decoding="async">
       </div>
@@ -6403,6 +6494,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-V" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">V</h3></div>
 <a href="../plantas/vanilla-planifolia/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -6415,7 +6507,11 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/valeriana-andina/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../assets/img/plantas/valeriana-andina/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Valeriana"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Valeriana</div>
     <div class="card-latin"><em>Valeriana pinnatifida</em></div>
@@ -6513,6 +6609,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-Y" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">Y</h3></div>
 <a href="../plantas/yacon/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -6536,11 +6633,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/ilex-paraguariensis/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/ilex-paraguariensis/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Yerba mate"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Yerba mate</div>
     <div class="card-latin"><em>Ilex paraguariensis</em></div>
@@ -6583,6 +6676,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-Z" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">Z</h3></div>
 <a href="../plantas/calea-ternifolia/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -6628,11 +6722,7 @@ p + p { margin-top: var(--sp-sm); }
   </div>
 </a>
 <a href="../plantas/smilax-regelii/" class="plant-card">
-  <div class="card-image">
-        <img src="../assets/img/plants/smilax-regelii/thumb.png"
-             alt="Ilustraci&oacute;n bot&aacute;nica de Zarzaparrilla"
-             loading="lazy" decoding="async">
-      </div>
+  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
     <div class="card-title">Zarzaparrilla</div>
     <div class="card-latin"><em>Smilax regelii</em></div>
@@ -6642,6 +6732,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-Á" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">Á</h3></div>
 <a href="../plantas/artocarpus-altilis/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -6675,6 +6766,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-Í" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">Í</h3></div>
 <a href="../plantas/pedilanthus-tithymaloides/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -6686,6 +6778,7 @@ p + p { margin-top: var(--sp-sm); }
     </div>
   </div>
 </a>
+<div class="alpha-anchor" id="letter-Ñ" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">Ñ</h3></div>
 <a href="../plantas/dioscorea-villosa/" class="plant-card">
   <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
   <div class="card-body">
@@ -6696,7 +6789,8 @@ p + p { margin-top: var(--sp-sm); }
       <span class="region-tag region-mexico">México</span>
     </div>
   </div>
-</a></div>
+</a>
+</div>
   </div>
 </div>
 <footer class="site-footer">
@@ -6705,6 +6799,7 @@ p + p { margin-top: var(--sp-sm); }
   <p>Fuentes: PubMed, Scopus, Biodiversity Heritage Library</p>
   <p>La informaci&oacute;n es educativa y no sustituye consejo m&eacute;dico profesional.</p>
 </footer>
+<script id="search-data" type="application/json">[{"id": "abelmoschus-esculentus", "n": "Okra", "s": "Abelmoschus esculentus", "u": ["emollient"]}, {"id": "abuta-grandifolia", "n": "Abuta", "s": "Abuta grandifolia", "u": ["emmenagogue"]}, {"id": "acacia-farnesiana", "n": "Huizache", "s": "Acacia farnesiana", "u": ["astringent"]}, {"id": "acalypha-arvensis", "n": "Hierba del cáncer", "s": "Acalypha arvensis", "u": ["antitumor"]}, {"id": "achillea-millefolium", "n": "Milenrama", "s": "Achillea millefolium", "u": ["hemostatic"]}, {"id": "achyrocline-satureioides", "n": "Marcela", "s": "Achyrocline satureioides", "u": ["digestive"]}, {"id": "acmella-oleracea", "n": "Jambú", "s": "Acmella oleracea", "u": ["analgesic"]}, {"id": "adiantum-capillus-veneris", "n": "Culantrillo", "s": "Adiantum capillus-veneris", "u": ["expectorant"]}, {"id": "agave-americana", "n": "Maguey", "s": "Agave americana", "u": ["anti-inflammatory"]}, {"id": "agave-tequilana", "n": "Agave azul", "s": "Agave tequilana", "u": ["prebiotic"]}, {"id": "ageratina-pichinchensis", "n": "Axihuitl", "s": "Ageratina pichinchensis", "u": ["antifungal"]}, {"id": "alchornea-castaneifolia", "n": "Iporuru", "s": "Alchornea castaneifolia", "u": ["antirheumatic"]}, {"id": "aloe-vera", "n": "Sábila", "s": "Aloe vera", "u": ["wound-healing"]}, {"id": "hierba-luisa", "n": "Hierba luisa", "s": "Aloysia citriodora", "u": ["digestión", "nervios", "insomnio", "resfriados"]}, {"id": "alpinia-zerumbet", "n": "Colonia", "s": "Alpinia zerumbet", "u": ["antihypertensive"]}, {"id": "kiwicha", "n": "Kiwicha", "s": "Amaranthus caudatus", "u": ["alimento nutritivo", "anemia", "energía"]}, {"id": "amaranthus-hybridus", "n": "Quelite", "s": "Amaranthus hybridus", "u": ["nutritive"]}, {"id": "ambrosia-peruviana", "n": "Marco", "s": "Ambrosia peruviana", "u": ["antirheumatic"]}, {"id": "amphipterygium-adstringens", "n": "Cuachalalate", "s": "Amphipterygium adstringens", "u": ["gastric"]}, {"id": "anacardium-occidentale", "n": "Marañón", "s": "Anacardium occidentale", "u": ["antidiarrheal"]}, {"id": "anadenanthera-colubrina", "n": "Cebil", "s": "Anadenanthera colubrina", "u": ["entheogen"]}, {"id": "anadenanthera-peregrina", "n": "Yopo", "s": "Anadenanthera peregrina", "u": ["entheogen"]}, {"id": "anemopaegma-mirandum", "n": "Catuaba verdadeira", "s": "Anemopaegma mirandum", "u": ["aphrodisiac"]}, {"id": "annona-cherimola", "n": "Chirimoya", "s": "Annona cherimola", "u": ["antitumor"]}, {"id": "graviola", "n": "Graviola", "s": "Annona muricata", "u": ["antiparasitario", "sedante", "cáncer tradicional", "fiebre"]}, {"id": "annona-reticulata", "n": "Anona", "s": "Annona reticulata", "u": ["antidiarrheal"]}, {"id": "annona-squamosa", "n": "Anón", "s": "Annona squamosa", "u": ["antiparasitic"]}, {"id": "arachis-hypogaea", "n": "Cacahuate", "s": "Arachis hypogaea", "u": ["nutritive"]}, {"id": "argemone-mexicana", "n": "Chicalote", "s": "Argemone mexicana", "u": ["analgesic"]}, {"id": "aristolochia-grandiflora", "n": "Flor de pato", "s": "Aristolochia grandiflora", "u": ["emmenagogue"]}, {"id": "aristolochia-serpentaria", "n": "Guaco", "s": "Aristolochia serpentaria", "u": ["antivenom"]}, {"id": "aristotelia-chilensis", "n": "Maqui", "s": "Aristotelia chilensis", "u": ["antioxidant"]}, {"id": "artemisia-ludoviciana", "n": "Estafiate", "s": "Artemisia ludoviciana", "u": ["digestive"]}, {"id": "artocarpus-altilis", "n": "Árbol del pan", "s": "Artocarpus altilis", "u": ["antihypertensive"]}, {"id": "asclepias-curassavica", "n": "Flor de muerto", "s": "Asclepias curassavica", "u": ["emetic"]}, {"id": "aspidosperma-quebracho-blanco", "n": "Quebracho blanco", "s": "Aspidosperma quebracho-blanco", "u": ["respiratory"]}, {"id": "astrocaryum-aculeatum", "n": "Tucumã", "s": "Astrocaryum aculeatum", "u": ["nutritive"]}, {"id": "astrocaryum-murumuru", "n": "Murumuru", "s": "Astrocaryum murumuru", "u": ["emollient"]}, {"id": "astronium-graveolens", "n": "Diomate", "s": "Astronium graveolens", "u": ["astringent"]}, {"id": "astronium-urundeuva", "n": "Urunday", "s": "Astronium urundeuva", "u": ["anti-inflammatory"]}, {"id": "averrhoa-carambola", "n": "Carambola", "s": "Averrhoa carambola", "u": ["hypoglycemic"]}, {"id": "azorella-compacta", "n": "Yareta", "s": "Azorella compacta", "u": ["antirheumatic"]}, {"id": "baccharis-genistelloides", "n": "Carqueja", "s": "Baccharis genistelloides", "u": ["hepatoprotective"]}, {"id": "baccharis-latifolia", "n": "Chilca", "s": "Baccharis latifolia", "u": ["antirheumatic"]}, {"id": "baccharis-trimera", "n": "Carqueja", "s": "Baccharis trimera", "u": ["hepatoprotective"]}, {"id": "bactris-gasipaes", "n": "Pejibaye", "s": "Bactris gasipaes", "u": ["nutritive"]}, {"id": "ayahuasca", "n": "Ayahuasca", "s": "Banisteriopsis caapi", "u": ["ceremonia", "purificación", "visiones", "curación espiritual"]}, {"id": "banisteriopsis-muricata", "n": "Chagropanga", "s": "Banisteriopsis muricata", "u": ["entheogen"]}, {"id": "bauhinia-forficata", "n": "Pata de vaca", "s": "Bauhinia forficata", "u": ["hypoglycemic"]}, {"id": "berberina", "n": "Berberina", "s": "Berberis vulgaris (source)", "u": ["digestivo", "antiinfeccioso", "control glucosa"]}, {"id": "bertholletia-excelsa", "n": "Castaña de Brasil", "s": "Bertholletia excelsa", "u": ["nutritive"]}, {"id": "bidens-pilosa", "n": "Romerillo", "s": "Bidens pilosa", "u": ["anti-inflammatory"]}, {"id": "achiote", "n": "Achiote", "s": "Bixa orellana", "u": ["colorante", "antiinflamatorio", "protector solar", "digestivo"]}, {"id": "bocconia-frutescens", "n": "Llora sangre", "s": "Bocconia frutescens", "u": ["antimicrobial"]}, {"id": "boldoa-purpurascens", "n": "Nitro", "s": "Boldoa purpurascens", "u": ["antispasmodic"]}, {"id": "bonafousia-undulata", "n": "Sanango blanco", "s": "Bonafousia undulata", "u": ["antirheumatic"]}, {"id": "bougainvillea-glabra", "n": "Bugambilia", "s": "Bougainvillea glabra", "u": ["respiratory"]}, {"id": "brachyotum-ledifolium", "n": "Zapatito del niño", "s": "Brachyotum ledifolium", "u": ["astringent"]}, {"id": "brickellia-cavanillesii", "n": "Prodigiosa", "s": "Brickellia cavanillesii", "u": ["hypoglycemic"]}, {"id": "brosimum-alicastrum", "n": "Ramón", "s": "Brosimum alicastrum", "u": ["galactagogue"]}, {"id": "brosimum-rubescens", "n": "Palo de sangre", "s": "Brosimum rubescens", "u": ["antianemic"]}, {"id": "brugmansia-arborea", "n": "Toé", "s": "Brugmansia arborea", "u": ["entheogen"]}, {"id": "brugmansia-suaveolens", "n": "Floripondio", "s": "Brugmansia suaveolens", "u": ["entheogen"]}, {"id": "chiric-sanango", "n": "Chiric sanango", "s": "Brunfelsia grandiflora", "u": ["reumatismo", "adicciones", "purificación", "fiebre"]}, {"id": "buddleja-globosa", "n": "Matico", "s": "Buddleja globosa", "u": ["wound-healing"]}, {"id": "bunchosia-armeniaca", "n": "Ciruela de fraile", "s": "Bunchosia armeniaca", "u": ["nutritive"]}, {"id": "bursera-graveolens", "n": "Palo santo", "s": "Bursera graveolens", "u": ["anti-inflammatory"]}, {"id": "bursera-simaruba", "n": "Palo mulato", "s": "Bursera simaruba", "u": ["anti-inflammatory"]}, {"id": "byrsonima-crassifolia", "n": "Nance", "s": "Byrsonima crassifolia", "u": ["antidiarrheal"]}, {"id": "byrsonima-verbascifolia", "n": "Murici", "s": "Byrsonima verbascifolia", "u": ["astringent"]}, {"id": "caesalpinia-echinata", "n": "Palo brasil", "s": "Caesalpinia echinata", "u": ["anti-inflammatory"]}, {"id": "caesalpinia-pulcherrima", "n": "Tabachín", "s": "Caesalpinia pulcherrima", "u": ["emmenagogue"]}, {"id": "tara", "n": "Tara", "s": "Caesalpinia spinosa", "u": ["gargarismo", "antiinflamatorio", "curtido de cuero", "tinte"]}, {"id": "calceolaria-engleriana", "n": "Zapatilla", "s": "Calceolaria engleriana", "u": ["renal"]}, {"id": "calea-ternifolia", "n": "Zacatechichi", "s": "Calea ternifolia", "u": ["oneirogenic"]}, {"id": "calea-urticifolia", "n": "Juanilama", "s": "Calea urticifolia", "u": ["digestive"]}, {"id": "calea-zacatechichi", "n": "Zacatechichi", "s": "Calea zacatechichi", "u": ["oneirogenic"]}, {"id": "calliandra-anomala", "n": "Tepescohuite", "s": "Calliandra anomala", "u": ["wound-healing"]}, {"id": "calliandra-houstoniana", "n": "Cabeza de ángel", "s": "Calliandra houstoniana", "u": ["anti-inflammatory"]}, {"id": "calophyllum-brasiliense", "n": "Guanandi", "s": "Calophyllum brasiliense", "u": ["wound-healing"]}, {"id": "calotropis-procera", "n": "Algodón de seda", "s": "Calotropis procera", "u": ["anti-inflammatory"]}, {"id": "calycophyllum-spruceanum", "n": "Capirona", "s": "Calycophyllum spruceanum", "u": ["wound-healing"]}, {"id": "camellia-sinensis", "n": "Té", "s": "Camellia sinensis", "u": ["stimulant"]}, {"id": "campomanesia-xanthocarpa", "n": "Guabiroba", "s": "Campomanesia xanthocarpa", "u": ["hypoglycemic"]}, {"id": "campsiandra-angustifolia", "n": "Huacapurana", "s": "Campsiandra angustifolia", "u": ["antimalarial"]}, {"id": "canavalia-rosea", "n": "Frijol de playa", "s": "Canavalia rosea", "u": ["anti-inflammatory"]}, {"id": "canna-indica", "n": "Achira", "s": "Canna indica", "u": ["emollient"]}, {"id": "cantua-buxifolia", "n": "Cantuta", "s": "Cantua buxifolia", "u": ["febrifuge"]}, {"id": "capraria-biflora", "n": "Claudiosa", "s": "Capraria biflora", "u": ["digestive"]}, {"id": "capsicum-annuum", "n": "Chile", "s": "Capsicum annuum", "u": ["analgesic"]}, {"id": "capsicum-baccatum", "n": "Ají escabeche", "s": "Capsicum baccatum", "u": ["analgesic"]}, {"id": "capsicum-chinense", "n": "Habanero", "s": "Capsicum chinense", "u": ["analgesic"]}, {"id": "capsicum-frutescens", "n": "Ají", "s": "Capsicum frutescens", "u": ["analgesic"]}, {"id": "capsicum-pubescens", "n": "Rocoto", "s": "Capsicum pubescens", "u": ["analgesic"]}, {"id": "carapa-guianensis", "n": "Andiroba", "s": "Carapa guianensis", "u": ["anti-inflammatory"]}, {"id": "carica-papaya", "n": "Papaya", "s": "Carica papaya", "u": ["digestive"]}, {"id": "cariniana-estrellensis", "n": "Jequitibá", "s": "Cariniana estrellensis", "u": ["astringent"]}, {"id": "luteina", "n": "Luteína", "s": "Carotenoide (de Tagetes erecta / marigold)", "u": ["vista", "protección solar retinal"]}, {"id": "casearia-sylvestris", "n": "Guaçatonga", "s": "Casearia sylvestris", "u": ["anti-inflammatory"]}, {"id": "cassia-grandis", "n": "Cañafístula", "s": "Cassia grandis", "u": ["laxative"]}, {"id": "castela-tortuosa", "n": "Chaparro amargoso", "s": "Castela tortuosa", "u": ["antiamoebic"]}, {"id": "catharanthus-roseus", "n": "Vinca", "s": "Catharanthus roseus", "u": ["antitumor"]}, {"id": "cecropia-obtusifolia", "n": "Guarumbo", "s": "Cecropia obtusifolia", "u": ["hypoglycemic"]}, {"id": "cedrela-odorata", "n": "Cedro", "s": "Cedrela odorata", "u": ["febrifuge"]}, {"id": "cedrelinga-cateniformis", "n": "Tornillo", "s": "Cedrelinga cateniformis", "u": ["anti-inflammatory"]}, {"id": "ceiba-pentandra", "n": "Ceiba", "s": "Ceiba pentandra", "u": ["emollient"]}, {"id": "celtis-iguanaea", "n": "Juassi", "s": "Celtis iguanaea", "u": ["digestive"]}, {"id": "centella-asiatica", "n": "Centella", "s": "Centella asiatica", "u": ["wound-healing"]}, {"id": "cephaelis-ipecacuanha", "n": "Ipecacuana", "s": "Cephaelis ipecacuanha", "u": ["emetic"]}, {"id": "cestrum-hediondinum", "n": "Hierba hedionda", "s": "Cestrum hediondinum", "u": ["antispasmodic"]}, {"id": "cestrum-nocturnum", "n": "Huele de noche", "s": "Cestrum nocturnum", "u": ["sedative"]}, {"id": "cestrum-parqui", "n": "Palqui", "s": "Cestrum parqui", "u": ["febrifuge"]}, {"id": "chenopodium-album", "n": "Quelite cenizo", "s": "Chenopodium album", "u": ["nutritive"]}, {"id": "chenopodium-ambrosioides", "n": "Paico", "s": "Chenopodium ambrosioides", "u": ["antiparasitic"]}, {"id": "chenopodium-graveolens", "n": "Hierba del zorrillo", "s": "Chenopodium graveolens", "u": ["antispasmodic"]}, {"id": "chenopodium-nuttalliae", "n": "Huauzontle", "s": "Chenopodium nuttalliae", "u": ["nutritive"]}, {"id": "canihua", "n": "Cañihua", "s": "Chenopodium pallidicaule", "u": ["alimento de altura", "energía", "resistencia al frío"]}, {"id": "quinoa", "n": "Quinoa", "s": "Chenopodium quinoa", "u": ["alimento básico", "nutritivo", "fortalecimiento"]}, {"id": "chiranthodendron-pentadactylon", "n": "Flor de manita", "s": "Chiranthodendron pentadactylon", "u": ["cardiotonic"]}, {"id": "chloroleucon-tortum", "n": "Tataré", "s": "Chloroleucon tortum", "u": ["astringent"]}, {"id": "chondrodendron-tomentosum", "n": "Curare", "s": "Chondrodendron tomentosum", "u": ["muscle-relaxant"]}, {"id": "chrysactinia-mexicana", "n": "Hierba de San Nicolás", "s": "Chrysactinia mexicana", "u": ["digestive"]}, {"id": "chrysobalanus-icaco", "n": "Icaco", "s": "Chrysobalanus icaco", "u": ["hypoglycemic"]}, {"id": "chuquiraga-jussieui", "n": "Chuquiragua", "s": "Chuquiraga jussieui", "u": ["febrifuge"]}, {"id": "cinchona-calisaya", "n": "Quina amarilla", "s": "Cinchona calisaya", "u": ["antimalarial"]}, {"id": "cinchona-officinalis", "n": "Quina", "s": "Cinchona officinalis", "u": ["antimalarial"]}, {"id": "cinchona-pubescens", "n": "Quina roja", "s": "Cinchona pubescens", "u": ["antimalarial"]}, {"id": "canela-ceilan", "n": "Canela de Ceilán", "s": "Cinnamomum verum", "u": ["digestivo", "control glucosa", "antimicrobiano", "warming"]}, {"id": "cissampelos-pareira", "n": "Pareira brava", "s": "Cissampelos pareira", "u": ["diuretic"]}, {"id": "cissus-verticillata", "n": "Uvilla", "s": "Cissus verticillata", "u": ["anti-inflammatory"]}, {"id": "citrus-aurantiifolia", "n": "Limón", "s": "Citrus aurantiifolia", "u": ["antiscorbutic"]}, {"id": "citrus-aurantium", "n": "Naranja agria", "s": "Citrus aurantium", "u": ["digestive"]}, {"id": "citrus-reticulata", "n": "Mandarina", "s": "Citrus reticulata", "u": ["digestive"]}, {"id": "citrus-sinensis", "n": "Naranja", "s": "Citrus sinensis", "u": ["antiscorbutic"]}, {"id": "clidemia-hirta", "n": "Mortiño", "s": "Clidemia hirta", "u": ["wound-healing"]}, {"id": "clinopodium-bolivianum", "n": "Muña de Bolivia", "s": "Clinopodium bolivianum", "u": ["digestive"]}, {"id": "clinopodium-brownei", "n": "Poleo americano", "s": "Clinopodium brownei", "u": ["digestive"]}, {"id": "clinopodium-mexicanum", "n": "Poleo", "s": "Clinopodium mexicanum", "u": ["digestive"]}, {"id": "clusia-rosea", "n": "Copey", "s": "Clusia rosea", "u": ["wound-healing"]}, {"id": "cnidoscolus-aconitifolius", "n": "Chaya", "s": "Cnidoscolus aconitifolius", "u": ["hypoglycemic"]}, {"id": "cnidoscolus-chayamansa", "n": "Chaya silvestre", "s": "Cnidoscolus chayamansa", "u": ["hypoglycemic"]}, {"id": "cochlospermum-vitifolium", "n": "Pochote", "s": "Cochlospermum vitifolium", "u": ["hepatoprotective"]}, {"id": "cocos-nucifera", "n": "Coco", "s": "Cocos nucifera", "u": ["rehydration"]}, {"id": "coffea-arabica", "n": "Café", "s": "Coffea arabica", "u": ["stimulant"]}, {"id": "coleus-amboinicus", "n": "Orégano francés", "s": "Coleus amboinicus", "u": ["respiratory"]}, {"id": "commelina-coelestis", "n": "Hierba del pollo", "s": "Commelina coelestis", "u": ["hemostatic"]}, {"id": "conyza-bonariensis", "n": "Cola de caballo", "s": "Conyza bonariensis", "u": ["anti-inflammatory"]}, {"id": "copaiba", "n": "Copaiba", "s": "Copaifera langsdorffii", "u": ["cicatrizante", "antiinflamatorio", "antimicrobiano", "dolor de garganta"]}, {"id": "copaifera-officinalis", "n": "Copaíba", "s": "Copaifera officinalis", "u": ["anti-inflammatory"]}, {"id": "copaifera-reticulata", "n": "Copaíba amazónica", "s": "Copaifera reticulata", "u": ["anti-inflammatory"]}, {"id": "cordia-alliodora", "n": "Laurel", "s": "Cordia alliodora", "u": ["respiratory"]}, {"id": "cordia-verbenacea", "n": "Erva baleeira", "s": "Cordia verbenacea", "u": ["anti-inflammatory"]}, {"id": "costus-spicatus", "n": "Caña agria", "s": "Costus spicatus", "u": ["diuretic"]}, {"id": "coumarouna-odorata", "n": "Sarrapia", "s": "Coumarouna odorata", "u": ["anticoagulant"]}, {"id": "couroupita-guianensis", "n": "Bala de cañón", "s": "Couroupita guianensis", "u": ["antimicrobial"]}, {"id": "coutarea-hexomera", "n": "Copalchi", "s": "Coutarea hexomera", "u": ["antimalarial"]}, {"id": "espino-blanco", "n": "Espino blanco", "s": "Crataegus monogyna", "u": ["tónico cardíaco", "presión arterial", "ansiedad", "digestión"]}, {"id": "crescentia-alata", "n": "Morro", "s": "Crescentia alata", "u": ["expectorant"]}, {"id": "crescentia-cujete", "n": "Jícara", "s": "Crescentia cujete", "u": ["respiratory"]}, {"id": "sangre-de-drago", "n": "Sangre de drago", "s": "Croton lechleri", "u": ["cicatrizante", "antidiarreico", "antiinflamatorio", "úlceras"]}, {"id": "croton-tiglium", "n": "Crotón", "s": "Croton tiglium", "u": ["purgative"]}, {"id": "cryptocarya-alba", "n": "Peumo", "s": "Cryptocarya alba", "u": ["hepatoprotective"]}, {"id": "cucurbita-ficifolia", "n": "Chilacayote", "s": "Cucurbita ficifolia", "u": ["hypoglycemic"]}, {"id": "cucurbita-pepo", "n": "Calabaza", "s": "Cucurbita pepo", "u": ["antiparasitic"]}, {"id": "cuphea-aequipetala", "n": "Hierba del cáncer", "s": "Cuphea aequipetala", "u": ["antitumor"]}, {"id": "curatella-americana", "n": "Chaparro", "s": "Curatella americana", "u": ["astringent"]}, {"id": "curcuma", "n": "Cúrcuma", "s": "Curcuma longa", "u": ["antiinflamatorio", "digestivo", "heridas", "dolor articular"]}, {"id": "cyathea-caracasana", "n": "Helecho arbóreo", "s": "Cyathea caracasana", "u": ["anti-inflammatory"]}, {"id": "cyathula-prostrata", "n": "Cadillo", "s": "Cyathula prostrata", "u": ["diuretic"]}, {"id": "cyclanthera-pedata", "n": "Caigua", "s": "Cyclanthera pedata", "u": ["hypolipidemic"]}, {"id": "cymbopogon-citratus", "n": "Hierba luisa", "s": "Cymbopogon citratus", "u": ["digestive"]}, {"id": "alcachofa", "n": "Alcachofa", "s": "Cynara scolymus", "u": ["digestión", "hígado", "colesterol", "diurético"]}, {"id": "cynodon-dactylon", "n": "Grama", "s": "Cynodon dactylon", "u": ["diuretic"]}, {"id": "cyperus-articulatus", "n": "Piripiri", "s": "Cyperus articulatus", "u": ["anticonvulsant"]}, {"id": "cyphomandra-betacea", "n": "Tomate de árbol", "s": "Cyphomandra betacea", "u": ["anti-inflammatory"]}, {"id": "datura-stramonium", "n": "Toloache", "s": "Datura stramonium", "u": ["antispasmodic"]}, {"id": "manayupa", "n": "Manayupa", "s": "Desmodium adscendens", "u": ["vías urinarias", "depurativo", "inflamación", "riñones"]}, {"id": "dimorphandra-mollis", "n": "Fava d'anta", "s": "Dimorphandra mollis", "u": ["venotonic"]}, {"id": "dioscorea-composita", "n": "Barbasco mexicano", "s": "Dioscorea composita", "u": ["hormonal"]}, {"id": "dioscorea-mexicana", "n": "Barbasco", "s": "Dioscorea mexicana", "u": ["hormonal"]}, {"id": "dioscorea-villosa", "n": "Ñame silvestre", "s": "Dioscorea villosa", "u": ["antispasmodic"]}, {"id": "diplopterys-cabrerana", "n": "Chaliponga", "s": "Diplopterys cabrerana", "u": ["entheogen"]}, {"id": "dipteryx-odorata", "n": "Cumaru", "s": "Dipteryx odorata", "u": ["anticoagulant"]}, {"id": "dorstenia-contrajerva", "n": "Contrahierba", "s": "Dorstenia contrajerva", "u": ["antivenom"]}, {"id": "dracontium-loretense", "n": "Jergón sacha", "s": "Dracontium loretense", "u": ["antivenom"]}, {"id": "drimys-winteri", "n": "Canelo", "s": "Drimys winteri", "u": ["antimicrobial"]}, {"id": "duranta-erecta", "n": "Garbancillo", "s": "Duranta erecta", "u": ["antimalarial"]}, {"id": "paico", "n": "Paico", "s": "Dysphania ambrosioides", "u": ["antiparasitario", "digestión", "cólicos", "gases"]}, {"id": "echinodorus-macrophyllus", "n": "Chapéu de couro", "s": "Echinodorus macrophyllus", "u": ["diuretic"]}, {"id": "enterolobium-cyclocarpum", "n": "Guanacaste", "s": "Enterolobium cyclocarpum", "u": ["astringent"]}, {"id": "equisetum-giganteum", "n": "Cola de caballo", "s": "Equisetum giganteum", "u": ["diuretic"]}, {"id": "equisetum-hyemale", "n": "Cola de caballo", "s": "Equisetum hyemale", "u": ["diuretic"]}, {"id": "eriobotrya-japonica", "n": "Níspero", "s": "Eriobotrya japonica", "u": ["expectorant"]}, {"id": "eryngium-carlinae", "n": "Hierba del sapo", "s": "Eryngium carlinae", "u": ["hypolipidemic"]}, {"id": "sachaculantro", "n": "Sacha culantro", "s": "Eryngium foetidum", "u": ["digestión", "antiinflamatorio", "fiebre", "convulsiones"]}, {"id": "erythrina-americana", "n": "Colorín", "s": "Erythrina americana", "u": ["sedative"]}, {"id": "erythrina-berteroana", "n": "Pito", "s": "Erythrina berteroana", "u": ["sedative"]}, {"id": "erythrina-falcata", "n": "Ceibo", "s": "Erythrina falcata", "u": ["sedative"]}, {"id": "erythrina-mulungu", "n": "Mulungu", "s": "Erythrina mulungu", "u": ["anxiolytic"]}, {"id": "coca", "n": "Hoja de coca", "s": "Erythroxylum coca", "u": ["mal de altura", "energía", "supresión apetito", "dolor", "ceremonia"]}, {"id": "erythroxylum-novogranatense", "n": "Coca colombiana", "s": "Erythroxylum novogranatense", "u": ["stimulant"]}, {"id": "espeletia-grandiflora", "n": "Frailejón", "s": "Espeletia grandiflora", "u": ["respiratory"]}, {"id": "eucommia-ulmoides", "n": "Chuchuhuasi", "s": "Eucommia ulmoides", "u": ["antirheumatic"]}, {"id": "eugenia-uniflora", "n": "Pitanga", "s": "Eugenia uniflora", "u": ["antihypertensive"]}, {"id": "euphorbia-hirta", "n": "Hierba de la golondrina", "s": "Euphorbia hirta", "u": ["antiasthmatic"]}, {"id": "euphorbia-lancifolia", "n": "Ixbut", "s": "Euphorbia lancifolia", "u": ["galactagogue"]}, {"id": "euterpe-oleracea", "n": "Açaí", "s": "Euterpe oleracea", "u": ["antioxidant"]}, {"id": "euterpe-precatoria", "n": "Asaí silvestre", "s": "Euterpe precatoria", "u": ["antioxidant"]}, {"id": "eysenhardtia-polystachya", "n": "Palo azul", "s": "Eysenhardtia polystachya", "u": ["diuretic"]}, {"id": "fabiana-imbricata", "n": "Pichi", "s": "Fabiana imbricata", "u": ["diuretic"]}, {"id": "ficus-insipida", "n": "Ojé", "s": "Ficus insipida", "u": ["antiparasitic"]}, {"id": "flourensia-cernua", "n": "Hojasén", "s": "Flourensia cernua", "u": ["digestive"]}, {"id": "fuchsia-magellanica", "n": "Chilco", "s": "Fuchsia magellanica", "u": ["febrifuge"]}, {"id": "galphimia-glauca", "n": "Árnica roja", "s": "Galphimia glauca", "u": ["anxiolytic"]}, {"id": "gaultheria-erecta", "n": "Toronjil de altura", "s": "Gaultheria erecta", "u": ["analgesic"]}, {"id": "genipa-americana", "n": "Jagua", "s": "Genipa americana", "u": ["anti-inflammatory"]}, {"id": "genipa-spruceana", "n": "Huito de altura", "s": "Genipa spruceana", "u": ["astringent"]}, {"id": "hercampuri", "n": "Hercampuri", "s": "Gentianella alborosea", "u": ["hígado", "colesterol", "obesidad", "depurativo"]}, {"id": "pasuchaca", "n": "Pasuchaca", "s": "Geranium dielsianum", "u": ["diabetes", "inflamación", "cicatrizante"]}, {"id": "gliricidia-sepium", "n": "Madero negro", "s": "Gliricidia sepium", "u": ["antiparasitic"]}, {"id": "gnaphalium-semiamplexicaule", "n": "Gordolobo", "s": "Gnaphalium semiamplexicaule", "u": ["expectorant"]}, {"id": "gossypium-hirsutum", "n": "Algodón", "s": "Gossypium hirsutum", "u": ["emmenagogue"]}, {"id": "gouania-polygama", "n": "Bejuco de indio", "s": "Gouania polygama", "u": ["oral-hygiene"]}, {"id": "guaiacum-officinale", "n": "Guayacán", "s": "Guaiacum officinale", "u": ["antirheumatic"]}, {"id": "guaiacum-sanctum", "n": "Guayacán santo", "s": "Guaiacum sanctum", "u": ["anti-inflammatory"]}, {"id": "guazuma-ulmifolia", "n": "Guázuma", "s": "Guazuma ulmifolia", "u": ["hypoglycemic"]}, {"id": "guettarda-combsii", "n": "Tastab", "s": "Guettarda combsii", "u": ["antidiarrheal"]}, {"id": "gymnema", "n": "Gymnema sylvestre", "s": "Gymnema sylvestre", "u": ["diabetes", "supresión dulce", "pérdida de peso"]}, {"id": "gymnosperma-glutinosum", "n": "Tatalencho", "s": "Gymnosperma glutinosum", "u": ["anti-inflammatory"]}, {"id": "haematoxylum-campechianum", "n": "Palo de Campeche", "s": "Haematoxylum campechianum", "u": ["astringent"]}, {"id": "hamelia-axillaris", "n": "Candelilla", "s": "Hamelia axillaris", "u": ["wound-healing"]}, {"id": "hamelia-patens", "n": "Tres puntas", "s": "Hamelia patens", "u": ["wound-healing"]}, {"id": "handroanthus-heptaphyllus", "n": "Lapacho rosado", "s": "Handroanthus heptaphyllus", "u": ["antitumor"]}, {"id": "harpagophytum-procumbens", "n": "Garra del diablo", "s": "Harpagophytum procumbens", "u": ["anti-inflammatory"]}, {"id": "havardia-albicans", "n": "Chucum", "s": "Havardia albicans", "u": ["wound-healing"]}, {"id": "heimia-salicifolia", "n": "Sinicuichi", "s": "Heimia salicifolia", "u": ["anxiolytic"]}, {"id": "helianthus-annuus", "n": "Girasol", "s": "Helianthus annuus", "u": ["anti-inflammatory"]}, {"id": "heliocarpus-appendiculatus", "n": "Jonote", "s": "Heliocarpus appendiculatus", "u": ["emollient"]}, {"id": "heliotropium-indicum", "n": "Alacrancillo", "s": "Heliotropium indicum", "u": ["anti-inflammatory"]}, {"id": "heteropterys-aphrodisiaca", "n": "Nó de cachorro", "s": "Heteropterys aphrodisiaca", "u": ["aphrodisiac"]}, {"id": "heterotheca-inuloides", "n": "Árnica mexicana", "s": "Heterotheca inuloides", "u": ["anti-inflammatory"]}, {"id": "hevea-brasiliensis", "n": "Caucho", "s": "Hevea brasiliensis", "u": ["wound-healing"]}, {"id": "hevea-guianensis", "n": "Shiringa", "s": "Hevea guianensis", "u": ["anti-inflammatory"]}, {"id": "hibiscus-sabdariffa", "n": "Jamaica", "s": "Hibiscus sabdariffa", "u": ["antihypertensive"]}, {"id": "himatanthus-sucuuba", "n": "Sucuuba", "s": "Himatanthus sucuuba", "u": ["antitumor"]}, {"id": "hintonia-latiflora", "n": "Copalchi", "s": "Hintonia latiflora", "u": ["hypoglycemic"]}, {"id": "hura-crepitans", "n": "Jabillo", "s": "Hura crepitans", "u": ["purgative"]}, {"id": "hymenaea-courbaril", "n": "Jatobá", "s": "Hymenaea courbaril", "u": ["respiratory"]}, {"id": "guayusa", "n": "Guayusa", "s": "Ilex guayusa", "u": ["energía", "claridad mental", "sueños lúcidos", "digestión"]}, {"id": "ilex-kunthiana", "n": "Té de Bogotá", "s": "Ilex kunthiana", "u": ["stimulant"]}, {"id": "ilex-paraguariensis", "n": "Yerba mate", "s": "Ilex paraguariensis", "u": ["stimulant"]}, {"id": "ilex-vomitoria", "n": "Apalache", "s": "Ilex vomitoria", "u": ["emetic"]}, {"id": "indigofera-suffruticosa", "n": "Añil", "s": "Indigofera suffruticosa", "u": ["anti-inflammatory"]}, {"id": "ipomoea-batatas", "n": "Camote", "s": "Ipomoea batatas", "u": ["nutritive"]}, {"id": "ipomoea-purga", "n": "Jalapa", "s": "Ipomoea purga", "u": ["purgative"]}, {"id": "iresine-diffusa", "n": "Escancel", "s": "Iresine diffusa", "u": ["anti-inflammatory"]}, {"id": "iresine-herbstii", "n": "Tlancuaya", "s": "Iresine herbstii", "u": ["hemostatic"]}, {"id": "jacaranda-mimosifolia", "n": "Jacarandá", "s": "Jacaranda mimosifolia", "u": ["antimicrobial"]}, {"id": "jatropha-curcas", "n": "Piñón", "s": "Jatropha curcas", "u": ["purgative"]}, {"id": "jatropha-dioica", "n": "Sangre de grado mexicana", "s": "Jatropha dioica", "u": ["astringent"]}, {"id": "huanarpo-macho", "n": "Huanarpo macho", "s": "Jatropha macrantha", "u": ["disfunción eréctil", "fertilidad masculina", "energía", "afrodisíaco"]}, {"id": "juglans-neotropica", "n": "Nogal", "s": "Juglans neotropica", "u": ["astringent"]}, {"id": "justicia-pectoralis", "n": "Tilo", "s": "Justicia pectoralis", "u": ["sedative"]}, {"id": "kalanchoe-pinnata", "n": "Siempreviva", "s": "Kalanchoe pinnata", "u": ["anti-inflammatory"]}, {"id": "krameria-erecta", "n": "Calderona", "s": "Krameria erecta", "u": ["astringent"]}, {"id": "ratania", "n": "Ratania", "s": "Krameria lappacea", "u": ["dientes", "encías", "astringente", "hemostático"]}, {"id": "lampaya-medicinalis", "n": "Lampaya", "s": "Lampaya medicinalis", "u": ["antirheumatic"]}, {"id": "laportea-aestuans", "n": "Ortiga", "s": "Laportea aestuans", "u": ["antirheumatic"]}, {"id": "larrea-tridentata", "n": "Gobernadora", "s": "Larrea tridentata", "u": ["antirheumatic"]}, {"id": "laurelia-sempervirens", "n": "Laurel chileno", "s": "Laurelia sempervirens", "u": ["antispasmodic"]}, {"id": "lecythis-pisonis", "n": "Sapucaia", "s": "Lecythis pisonis", "u": ["nutritive"]}, {"id": "leonotis-nepetifolia", "n": "Molinillo", "s": "Leonotis nepetifolia", "u": ["febrifuge"]}, {"id": "leonurus-sibiricus", "n": "Marihuanilla", "s": "Leonurus sibiricus", "u": ["emmenagogue"]}, {"id": "lepechinia-meyenii", "n": "Salvia", "s": "Lepechinia meyenii", "u": ["digestive"]}, {"id": "lepidium-didymum", "n": "Mastuerzo", "s": "Lepidium didymum", "u": ["anti-inflammatory"]}, {"id": "maca", "n": "Maca", "s": "Lepidium meyenii", "u": ["fertilidad", "energía", "adaptógeno", "libido", "resistencia al frío"]}, {"id": "leptocarpha-rivularis", "n": "Palo negro", "s": "Leptocarpha rivularis", "u": ["antitumor"]}, {"id": "lippia-alba", "n": "Pronto alivio", "s": "Lippia alba", "u": ["sedative"]}, {"id": "lippia-dulcis", "n": "Hierba dulce", "s": "Lippia dulcis", "u": ["expectorant"]}, {"id": "lippia-graveolens", "n": "Orégano mexicano", "s": "Lippia graveolens", "u": ["antimicrobial"]}, {"id": "lippia-micromera", "n": "Orégano de monte", "s": "Lippia micromera", "u": ["respiratory"]}, {"id": "liquidambar-styraciflua", "n": "Liquidámbar", "s": "Liquidambar styraciflua", "u": ["expectorant"]}, {"id": "loeselia-mexicana", "n": "Espinosilla", "s": "Loeselia mexicana", "u": ["digestive"]}, {"id": "lonchocarpus-utilis", "n": "Barbasco", "s": "Lonchocarpus utilis", "u": ["insecticidal"]}, {"id": "lophophora-williamsii", "n": "Peyote", "s": "Lophophora williamsii", "u": ["entheogen"]}, {"id": "luffa-operculata", "n": "Esponjilla", "s": "Luffa operculata", "u": ["sinusitis"]}, {"id": "tarwi", "n": "Tarwi", "s": "Lupinus mutabilis", "u": ["alimento proteico", "control de parásitos", "diabetes tradicional"]}, {"id": "lycopersicon-esculentum", "n": "Tomate", "s": "Lycopersicon esculentum", "u": ["antioxidant"]}, {"id": "malvaviscus-arboreus", "n": "Manzanilla de monte", "s": "Malvaviscus arboreus", "u": ["emollient"]}, {"id": "mammea-americana", "n": "Mamey de Santo Domingo", "s": "Mammea americana", "u": ["insecticidal"]}, {"id": "mandevilla-velutina", "n": "Veludo", "s": "Mandevilla velutina", "u": ["anti-inflammatory"]}, {"id": "manettia-cordifolia", "n": "Guaco trepador", "s": "Manettia cordifolia", "u": ["antivenom"]}, {"id": "mangifera-indica", "n": "Mango", "s": "Mangifera indica", "u": ["antioxidant"]}, {"id": "manihot-esculenta", "n": "Yuca", "s": "Manihot esculenta", "u": ["emollient"]}, {"id": "manilkara-zapota", "n": "Chicozapote", "s": "Manilkara zapota", "u": ["antidiarrheal"]}, {"id": "mansoa-alliacea", "n": "Ajo sacha", "s": "Mansoa alliacea", "u": ["anti-inflammatory"]}, {"id": "marrubium-vulgare", "n": "Manrubio", "s": "Marrubium vulgare", "u": ["expectorant"]}, {"id": "matricaria-chamomilla", "n": "Manzanilla", "s": "Matricaria chamomilla", "u": ["digestive"]}, {"id": "mauritia-flexuosa", "n": "Aguaje", "s": "Mauritia flexuosa", "u": ["nutritive"]}, {"id": "maytenus-boaria", "n": "Maitén", "s": "Maytenus boaria", "u": ["febrifuge"]}, {"id": "maytenus-ilicifolia", "n": "Espinheira santa", "s": "Maytenus ilicifolia", "u": ["gastric"]}, {"id": "maytenus-krukovii", "n": "Chuchuhuasi", "s": "Maytenus krukovii", "u": ["antirheumatic"]}, {"id": "maytenus-laevis", "n": "Chuchuhuasi", "s": "Maytenus laevis", "u": ["antirheumatic"]}, {"id": "maytenus-macrocarpa", "n": "Chuchuhuasi", "s": "Maytenus macrocarpa", "u": ["antirheumatic"]}, {"id": "mentha-piperita", "n": "Menta", "s": "Mentha piperita", "u": ["digestive"]}, {"id": "mikania-cordifolia", "n": "Guaco", "s": "Mikania cordifolia", "u": ["antivenom"]}, {"id": "mikania-glomerata", "n": "Guaco", "s": "Mikania glomerata", "u": ["bronchodilator"]}, {"id": "mikania-laevigata", "n": "Guaco liso", "s": "Mikania laevigata", "u": ["bronchodilator"]}, {"id": "mimosa-pudica", "n": "Dormilona", "s": "Mimosa pudica", "u": ["sedative"]}, {"id": "mimosa-tenuiflora", "n": "Tepescohuite", "s": "Mimosa tenuiflora", "u": ["wound-healing"]}, {"id": "minquartia-guianensis", "n": "Huacapú", "s": "Minquartia guianensis", "u": ["antimalarial"]}, {"id": "muna", "n": "Muña", "s": "Minthostachys mollis", "u": ["digestión", "soroche", "dolor estomacal", "antiparasitario", "conservante"]}, {"id": "melon-amargo", "n": "Melón amargo", "s": "Momordica charantia", "u": ["diabetes", "digestivo", "antiparasitario"]}, {"id": "montanoa-tomentosa", "n": "Cihuapatli", "s": "Montanoa tomentosa", "u": ["oxytocic"]}, {"id": "noni", "n": "Noni", "s": "Morinda citrifolia", "u": ["inmunidad", "dolor", "infecciones", "diabetes"]}, {"id": "morinda-royoc", "n": "Piñipiní", "s": "Morinda royoc", "u": ["analgesic"]}, {"id": "moringa-oleifera", "n": "Moringa", "s": "Moringa oleifera", "u": ["nutritive"]}, {"id": "muehlenbeckia-volcanica", "n": "Mullaca", "s": "Muehlenbeckia volcanica", "u": ["renal"]}, {"id": "murraya-paniculata", "n": "Limonaria", "s": "Murraya paniculata", "u": ["analgesic"]}, {"id": "musa-paradisiaca", "n": "Plátano", "s": "Musa paradisiaca", "u": ["astringent"]}, {"id": "mutisia-acuminata", "n": "Chinchilcuma", "s": "Mutisia acuminata", "u": ["respiratory"]}, {"id": "myracrodruon-urundeuva", "n": "Aroeira do sertão", "s": "Myracrodruon urundeuva", "u": ["anti-inflammatory"]}, {"id": "camu-camu", "n": "Camu camu", "s": "Myrciaria dubia", "u": ["vitamina C", "energía", "inmunidad", "antienvejecimiento"]}, {"id": "myroxylon-balsamum", "n": "Bálsamo de Perú", "s": "Myroxylon balsamum", "u": ["wound-healing"]}, {"id": "neurolaena-lobata", "n": "Tres puntas", "s": "Neurolaena lobata", "u": ["antimalarial"]}, {"id": "nicandra-physalodes", "n": "Capulí cimarrón", "s": "Nicandra physalodes", "u": ["sedative"]}, {"id": "nicotiana-rustica", "n": "Mapacho", "s": "Nicotiana rustica", "u": ["ceremonial"]}, {"id": "nicotiana-tabacum", "n": "Tabaco", "s": "Nicotiana tabacum", "u": ["ceremonial"]}, {"id": "niphidium-crassifolium", "n": "Calahuala andina", "s": "Niphidium crassifolium", "u": ["renal"]}, {"id": "ocimum-basilicum", "n": "Albahaca", "s": "Ocimum basilicum", "u": ["digestive"]}, {"id": "ocimum-campechianum", "n": "Albahaca de monte", "s": "Ocimum campechianum", "u": ["digestive"]}, {"id": "ocimum-gratissimum", "n": "Albahaca africana", "s": "Ocimum gratissimum", "u": ["antimicrobial"]}, {"id": "ocotea-pretiosa", "n": "Canela de sassafrás", "s": "Ocotea pretiosa", "u": ["antimicrobial"]}, {"id": "oenocarpus-bataua", "n": "Ungurahui", "s": "Oenocarpus bataua", "u": ["respiratory"]}, {"id": "oenothera-rosea", "n": "Hierba del golpe", "s": "Oenothera rosea", "u": ["anti-inflammatory"]}, {"id": "tuna", "n": "Tuna", "s": "Opuntia ficus-indica", "u": ["diabetes", "colesterol", "digestión", "resaca"]}, {"id": "orbignya-phalerata", "n": "Babaçu", "s": "Orbignya phalerata", "u": ["anti-inflammatory"]}, {"id": "ottonia-propinqua", "n": "Jaborandi falsa", "s": "Ottonia propinqua", "u": ["analgesic"]}, {"id": "oca", "n": "Oca", "s": "Oxalis tuberosa", "u": ["alimento", "emoliente", "astringente", "antiescorbútico"]}, {"id": "pachyrhizus-erosus", "n": "Jícama", "s": "Pachyrhizus erosus", "u": ["prebiotic"]}, {"id": "parastrephia-lucida", "n": "Tola", "s": "Parastrephia lucida", "u": ["respiratory"]}, {"id": "parinari-campestris", "n": "Parinari", "s": "Parinari campestris", "u": ["antidiarrheal"]}, {"id": "parthenium-hysterophorus", "n": "Hierba amargosa", "s": "Parthenium hysterophorus", "u": ["febrifuge"]}, {"id": "parthenium-incanum", "n": "Mariola", "s": "Parthenium incanum", "u": ["digestive"]}, {"id": "passiflora-edulis", "n": "Maracuyá", "s": "Passiflora edulis", "u": ["anxiolytic"]}, {"id": "passiflora-incarnata", "n": "Pasionaria", "s": "Passiflora incarnata", "u": ["anxiolytic"]}, {"id": "passiflora-ligularis", "n": "Granadilla", "s": "Passiflora ligularis", "u": ["sedative"]}, {"id": "paullinia-cupana", "n": "Guaraná", "s": "Paullinia cupana", "u": ["stimulant"]}, {"id": "paullinia-yoco", "n": "Yoco", "s": "Paullinia yoco", "u": ["stimulant"]}, {"id": "pedilanthus-tithymaloides", "n": "Ítamo real", "s": "Pedilanthus tithymaloides", "u": ["emetic"]}, {"id": "pentaclethra-macroloba", "n": "Pracaxi", "s": "Pentaclethra macroloba", "u": ["emollient"]}, {"id": "peperomia-inaequalifolia", "n": "Congona", "s": "Peperomia inaequalifolia", "u": ["analgesic"]}, {"id": "peperomia-pellucida", "n": "Corazón de hombre", "s": "Peperomia pellucida", "u": ["analgesic"]}, {"id": "persea-americana", "n": "Aguacate", "s": "Persea americana", "u": ["hepatoprotective"]}, {"id": "petiveria-alliacea", "n": "Anamú", "s": "Petiveria alliacea", "u": ["immunostimulant"]}, {"id": "boldo", "n": "Boldo", "s": "Peumus boldus", "u": ["hígado", "vesícula", "digestión", "estreñimiento"]}, {"id": "pfaffia-paniculata", "n": "Suma", "s": "Pfaffia paniculata", "u": ["adaptogen"]}, {"id": "phaseolus-vulgaris", "n": "Frijol", "s": "Phaseolus vulgaris", "u": ["nutritive"]}, {"id": "phlebodium-aureum", "n": "Calahuala", "s": "Phlebodium aureum", "u": ["immunomodulatory"]}, {"id": "phoradendron-leucarpum", "n": "Muérdago", "s": "Phoradendron leucarpum", "u": ["antihypertensive"]}, {"id": "chanca-piedra", "n": "Chanca piedra", "s": "Phyllanthus niruri", "u": ["cálculos renales", "diurético", "hepatoprotector", "diabetes"]}, {"id": "physalis-angulata", "n": "Bolsa mullaca", "s": "Physalis angulata", "u": ["anti-inflammatory"]}, {"id": "aguaymanto", "n": "Aguaymanto", "s": "Physalis peruviana", "u": ["diabetes", "antioxidante", "antiinflamatorio", "parásitos"]}, {"id": "phytolacca-rivinoides", "n": "Jaboncillo", "s": "Phytolacca rivinoides", "u": ["anti-inflammatory"]}, {"id": "pilocarpus-jaborandi", "n": "Jaborandi", "s": "Pilocarpus jaborandi", "u": ["glaucoma"]}, {"id": "pimenta-dioica", "n": "Pimienta gorda", "s": "Pimenta dioica", "u": ["digestive"]}, {"id": "pimenta-racemosa", "n": "Malagueta", "s": "Pimenta racemosa", "u": ["analgesic"]}, {"id": "matico", "n": "Matico", "s": "Piper aduncum", "u": ["cicatrizante", "úlceras", "hemorragias", "diarrea"]}, {"id": "piper-amalago", "n": "Cordoncillo prieto", "s": "Piper amalago", "u": ["analgesic"]}, {"id": "piper-auritum", "n": "Hoja santa", "s": "Piper auritum", "u": ["analgesic"]}, {"id": "piper-callosum", "n": "Guayusa de monte", "s": "Piper callosum", "u": ["digestive"]}, {"id": "piper-carpunya", "n": "Guaviduca", "s": "Piper carpunya", "u": ["digestive"]}, {"id": "piper-elongatum", "n": "Matico", "s": "Piper elongatum", "u": ["hemostatic"]}, {"id": "piper-methysticum", "n": "Kava", "s": "Piper methysticum", "u": ["anxiolytic"]}, {"id": "piper-nigrum", "n": "Pimienta negra", "s": "Piper nigrum", "u": ["digestive"]}, {"id": "piper-umbellatum", "n": "Cordoncillo", "s": "Piper umbellatum", "u": ["anti-inflammatory"]}, {"id": "plantago-major", "n": "Llantén", "s": "Plantago major", "u": ["anti-inflammatory"]}, {"id": "plectranthus-amboinicus", "n": "Orégano orejón", "s": "Plectranthus amboinicus", "u": ["respiratory"]}, {"id": "plectranthus-barbatus", "n": "Boldo brasileño", "s": "Plectranthus barbatus", "u": ["digestive"]}, {"id": "pluchea-sagittalis", "n": "Lucera", "s": "Pluchea sagittalis", "u": ["digestive"]}, {"id": "sacha-inchi", "n": "Sacha inchi", "s": "Plukenetia volubilis", "u": ["alimento nutritivo", "aceite para piel", "energía"]}, {"id": "polylepis-racemosa", "n": "Queñua", "s": "Polylepis racemosa", "u": ["respiratory"]}, {"id": "polypodium-leucotomos", "n": "Calaguala", "s": "Polypodium leucotomos", "u": ["immunomodulatory"]}, {"id": "porophyllum-ruderale", "n": "Pápalo", "s": "Porophyllum ruderale", "u": ["digestive"]}, {"id": "portulaca-oleracea", "n": "Verdolaga", "s": "Portulaca oleracea", "u": ["anti-inflammatory"]}, {"id": "pothomorphe-peltata", "n": "Santa María", "s": "Pothomorphe peltata", "u": ["analgesic"]}, {"id": "pothomorphe-umbellata", "n": "Pariparoba", "s": "Pothomorphe umbellata", "u": ["hepatoprotective"]}, {"id": "pourouma-cecropiifolia", "n": "Uvilla amazónica", "s": "Pourouma cecropiifolia", "u": ["nutritive"]}, {"id": "lucuma", "n": "Lúcuma", "s": "Pouteria lucuma", "u": ["alimento nutritivo", "endulzante natural", "piel"]}, {"id": "pouteria-sapota", "n": "Mamey", "s": "Pouteria sapota", "u": ["emollient"]}, {"id": "prosopis-juliflora", "n": "Mezquite", "s": "Prosopis juliflora", "u": ["astringent"]}, {"id": "protium-heptaphyllum", "n": "Almecegueiro", "s": "Protium heptaphyllum", "u": ["anti-inflammatory"]}, {"id": "psidium-guajava", "n": "Guayaba", "s": "Psidium guajava", "u": ["antidiarrheal"]}, {"id": "psilocybe-mexicana", "n": "Teonanácatl", "s": "Psilocybe mexicana", "u": ["entheogen"]}, {"id": "psittacanthus-calyculatus", "n": "Muérdago mexicano", "s": "Psittacanthus calyculatus", "u": ["antihypertensive"]}, {"id": "psychotria-viridis", "n": "Chacruna", "s": "Psychotria viridis", "u": ["entheogen"]}, {"id": "punica-granatum", "n": "Granada", "s": "Punica granatum", "u": ["antiparasitic"]}, {"id": "qualea-grandiflora", "n": "Pau terra", "s": "Qualea grandiflora", "u": ["antiulcer"]}, {"id": "quassia-amara", "n": "Cuasia", "s": "Quassia amara", "u": ["antimalarial"]}, {"id": "quillaja-saponaria", "n": "Quillay", "s": "Quillaja saponaria", "u": ["expectorant"]}, {"id": "randia-aculeata", "n": "Cruceta", "s": "Randia aculeata", "u": ["febrifuge"]}, {"id": "rauvolfia-tetraphylla", "n": "Chalche", "s": "Rauvolfia tetraphylla", "u": ["antihypertensive"]}, {"id": "remijia-peruviana", "n": "Cascarilla", "s": "Remijia peruviana", "u": ["antimalarial"]}, {"id": "ricinus-communis", "n": "Higuerilla", "s": "Ricinus communis", "u": ["purgative"]}, {"id": "rivea-corymbosa", "n": "Ololiuqui", "s": "Rivea corymbosa", "u": ["entheogen"]}, {"id": "rollinia-mucosa", "n": "Biribá", "s": "Rollinia mucosa", "u": ["anti-inflammatory"]}, {"id": "rosmarinus-officinalis", "n": "Romero", "s": "Rosmarinus officinalis", "u": ["circulatory"]}, {"id": "ruta-graveolens", "n": "Ruda", "s": "Ruta graveolens", "u": ["emmenagogue"]}, {"id": "salvia-divinorum", "n": "Ska pastora", "s": "Salvia divinorum", "u": ["entheogen"]}, {"id": "salvia-hispanica", "n": "Chía", "s": "Salvia hispanica", "u": ["nutritive"]}, {"id": "salvia-officinalis", "n": "Salvia", "s": "Salvia officinalis", "u": ["antiseptic"]}, {"id": "sambucus-mexicana", "n": "Saúco", "s": "Sambucus mexicana", "u": ["diaphoretic"]}, {"id": "sambucus-nigra-subsp-canadensis", "n": "Sauco", "s": "Sambucus nigra subsp. canadensis", "u": ["diaphoretic"]}, {"id": "sambucus-peruviana", "n": "Saúco andino", "s": "Sambucus peruviana", "u": ["diaphoretic"]}, {"id": "sapindus-saponaria", "n": "Jaboncillo", "s": "Sapindus saponaria", "u": ["expectorant"]}, {"id": "satureja-boliviana", "n": "Quimsa cuchu", "s": "Satureja boliviana", "u": ["digestive"]}, {"id": "sauvagesia-erecta", "n": "Hierba de San Martín", "s": "Sauvagesia erecta", "u": ["anti-inflammatory"]}, {"id": "schinopsis-balansae", "n": "Quebracho colorado", "s": "Schinopsis balansae", "u": ["astringent"]}, {"id": "molle", "n": "Molle", "s": "Schinus molle", "u": ["reumatismo", "dientes", "chicha", "antiinflamatorio"]}, {"id": "schinus-terebinthifolia", "n": "Pimentero brasileño", "s": "Schinus terebinthifolia", "u": ["antimicrobial"]}, {"id": "sechium-edule", "n": "Chayote", "s": "Sechium edule", "u": ["antihypertensive"]}, {"id": "selaginella-lepidophylla", "n": "Doradilla", "s": "Selaginella lepidophylla", "u": ["diuretic"]}, {"id": "senecio-canescens", "n": "Vira vira", "s": "Senecio canescens", "u": ["expectorant"]}, {"id": "senecio-nutans", "n": "Chachacoma", "s": "Senecio nutans", "u": ["altitude-sickness"]}, {"id": "senecio-tephrosioides", "n": "Huamanripa", "s": "Senecio tephrosioides", "u": ["respiratory"]}, {"id": "senna-alexandrina", "n": "Sen", "s": "Senna alexandrina", "u": ["laxative"]}, {"id": "senna-occidentalis", "n": "Café cimarrón", "s": "Senna occidentalis", "u": ["laxative"]}, {"id": "senna-reticulata", "n": "Retama", "s": "Senna reticulata", "u": ["laxative"]}, {"id": "saw-palmetto", "n": "Saw palmetto", "s": "Serenoa repens", "u": ["próstata", "sistema urinario", "calvicie"]}, {"id": "sida-acuta", "n": "Escoba de castilla", "s": "Sida acuta", "u": ["antimalarial"]}, {"id": "sida-rhombifolia", "n": "Escoba", "s": "Sida rhombifolia", "u": ["anti-inflammatory"]}, {"id": "simarouba-amara", "n": "Marupa", "s": "Simarouba amara", "u": ["antimalarial"]}, {"id": "simarouba-glauca", "n": "Aceituno", "s": "Simarouba glauca", "u": ["antimalarial"]}, {"id": "yacon", "n": "Yacón", "s": "Smallanthus sonchifolius", "u": ["diabetes", "digestión", "diurético", "pérdida de peso"]}, {"id": "smilax-regelii", "n": "Zarzaparrilla", "s": "Smilax regelii", "u": ["depurative"]}, {"id": "socratea-exorrhiza", "n": "Cashapona", "s": "Socratea exorrhiza", "u": ["antiparasitic"]}, {"id": "solanum-americanum", "n": "Hierba mora", "s": "Solanum americanum", "u": ["anti-inflammatory"]}, {"id": "solanum-nigrum", "n": "Hierba mora negra", "s": "Solanum nigrum", "u": ["anti-inflammatory"]}, {"id": "solanum-paniculatum", "n": "Jurubeba", "s": "Solanum paniculatum", "u": ["hepatoprotective"]}, {"id": "solanum-quitoense", "n": "Lulo", "s": "Solanum quitoense", "u": ["diuretic"]}, {"id": "solanum-sessiliflorum", "n": "Cocona", "s": "Solanum sessiliflorum", "u": ["hypoglycemic"]}, {"id": "solanum-torvum", "n": "Berenjena cimarrona", "s": "Solanum torvum", "u": ["antianemic"]}, {"id": "solanum-tuberosum", "n": "Papa", "s": "Solanum tuberosum", "u": ["emollient"]}, {"id": "spilanthes-acmella", "n": "Botoncillo", "s": "Spilanthes acmella", "u": ["analgesic"]}, {"id": "spondias-mombin", "n": "Jobo", "s": "Spondias mombin", "u": ["anti-inflammatory"]}, {"id": "spondias-purpurea", "n": "Jocote", "s": "Spondias purpurea", "u": ["antidiarrheal"]}, {"id": "stachytarpheta-jamaicensis", "n": "Verbena cimarrona", "s": "Stachytarpheta jamaicensis", "u": ["febrifuge"]}, {"id": "stevia-rebaudiana", "n": "Stevia", "s": "Stevia rebaudiana", "u": ["hypoglycemic"]}, {"id": "strychnos-toxifera", "n": "Curare", "s": "Strychnos toxifera", "u": ["muscle-relaxant"]}, {"id": "stryphnodendron-adstringens", "n": "Barbatimão", "s": "Stryphnodendron adstringens", "u": ["wound-healing"]}, {"id": "stryphnodendron-barbatimam", "n": "Barbatimão", "s": "Stryphnodendron barbatimam", "u": ["wound-healing"]}, {"id": "swartzia-polyphylla", "n": "Cumaceba", "s": "Swartzia polyphylla", "u": ["antiparasitic"]}, {"id": "swietenia-macrophylla", "n": "Caoba de hoja ancha", "s": "Swietenia macrophylla", "u": ["astringent"]}, {"id": "swietenia-mahagoni", "n": "Caoba", "s": "Swietenia mahagoni", "u": ["astringent"]}, {"id": "syzygium-aromaticum", "n": "Clavo de olor", "s": "Syzygium aromaticum", "u": ["analgesic"]}, {"id": "tabebuia-aurea", "n": "Lapacho amarillo", "s": "Tabebuia aurea", "u": ["anti-inflammatory"]}, {"id": "tabebuia-impetiginosa", "n": "Lapacho", "s": "Tabebuia impetiginosa", "u": ["antifungal"]}, {"id": "tabernaemontana-divaricata", "n": "Jazmín de leche", "s": "Tabernaemontana divaricata", "u": ["analgesic"]}, {"id": "tabernaemontana-sananho", "n": "Sanango", "s": "Tabernaemontana sananho", "u": ["antirheumatic"]}, {"id": "tagetes-erecta", "n": "Cempasúchil", "s": "Tagetes erecta", "u": ["digestive"]}, {"id": "tagetes-lucida", "n": "Pericón", "s": "Tagetes lucida", "u": ["digestive"]}, {"id": "huacatay", "n": "Huacatay", "s": "Tagetes minuta", "u": ["condimento", "antiparasitario", "repelente", "digestivo"]}, {"id": "talauma-mexicana", "n": "Flor de corazón", "s": "Talauma mexicana", "u": ["cardiotonic"]}, {"id": "tamarindus-indica", "n": "Tamarindo", "s": "Tamarindus indica", "u": ["laxative"]}, {"id": "tanacetum-parthenium", "n": "Santa María", "s": "Tanacetum parthenium", "u": ["antimigraine"]}, {"id": "taraxacum-officinale", "n": "Diente de león", "s": "Taraxacum officinale", "u": ["diuretic"]}, {"id": "taxodium-mucronatum", "n": "Ahuehuete", "s": "Taxodium mucronatum", "u": ["astringent"]}, {"id": "tecoma-stans", "n": "Tronadora", "s": "Tecoma stans", "u": ["hypoglycemic"]}, {"id": "teloxys-ambrosioides", "n": "Pazote", "s": "Teloxys ambrosioides", "u": ["antiparasitic"]}, {"id": "tephrosia-purpurea", "n": "Barbasco", "s": "Tephrosia purpurea", "u": ["piscicidal"]}, {"id": "terminalia-catappa", "n": "Almendro tropical", "s": "Terminalia catappa", "u": ["astringent"]}, {"id": "ternstroemia-pringlei", "n": "Tila de flor", "s": "Ternstroemia pringlei", "u": ["sedative"]}, {"id": "tessaria-integrifolia", "n": "Pájaro bobo", "s": "Tessaria integrifolia", "u": ["respiratory"]}, {"id": "theobroma-cacao", "n": "Cacao", "s": "Theobroma cacao", "u": ["cardiovascular"]}, {"id": "theobroma-grandiflorum", "n": "Cupuaçu", "s": "Theobroma grandiflorum", "u": ["antioxidant"]}, {"id": "thevetia-peruviana", "n": "Codo de fraile", "s": "Thevetia peruviana", "u": ["cardiotonic"]}, {"id": "tilia-americana-var-mexicana", "n": "Tila", "s": "Tilia americana var. mexicana", "u": ["sedative"]}, {"id": "tillandsia-streptocarpa", "n": "Clavel del aire", "s": "Tillandsia streptocarpa", "u": ["anti-inflammatory"]}, {"id": "tillandsia-usneoides", "n": "Heno", "s": "Tillandsia usneoides", "u": ["anti-inflammatory"]}, {"id": "tithonia-diversifolia", "n": "Botón de oro", "s": "Tithonia diversifolia", "u": ["anti-inflammatory"]}, {"id": "tournefortia-hirsutissima", "n": "Tlachichinole", "s": "Tournefortia hirsutissima", "u": ["wound-healing"]}, {"id": "tradescantia-zebrina", "n": "Cucaracha", "s": "Tradescantia zebrina", "u": ["anti-inflammatory"]}, {"id": "trichilia-catigua", "n": "Catuaba", "s": "Trichilia catigua", "u": ["aphrodisiac"]}, {"id": "trichilia-havanensis", "n": "Cabo de hacha", "s": "Trichilia havanensis", "u": ["antiparasitic"]}, {"id": "tridax-procumbens", "n": "Hierba de toro", "s": "Tridax procumbens", "u": ["hemostatic"]}, {"id": "tropaeolum-majus", "n": "Capuchina", "s": "Tropaeolum majus", "u": ["antibiotic"]}, {"id": "mashua", "n": "Mashua", "s": "Tropaeolum tuberosum", "u": ["próstata", "riñones", "anemia", "antibiótico natural"]}, {"id": "turnera-diffusa", "n": "Damiana", "s": "Turnera diffusa", "u": ["aphrodisiac"]}, {"id": "clavo-huasca", "n": "Clavo huasca", "s": "Tynanthus panurensis", "u": ["afrodisíaco", "reumatismo", "dolor dental", "tónico"]}, {"id": "ugni-molinae", "n": "Murta", "s": "Ugni molinae", "u": ["antioxidant"]}, {"id": "ullucus-tuberosus", "n": "Olluco", "s": "Ullucus tuberosus", "u": ["emollient"]}, {"id": "cat-claw-yellow", "n": "Uña de gato amarilla", "s": "Uncaria guianensis", "u": ["antiinflamatorio", "huesos", "artritis"]}, {"id": "una-de-gato", "n": "Uña de gato", "s": "Uncaria tomentosa", "u": ["antiinflamatorio", "inmunidad", "artritis", "úlceras gástricas"]}, {"id": "urera-baccifera", "n": "Ortiga brava", "s": "Urera baccifera", "u": ["antirheumatic"]}, {"id": "arandano", "n": "Arándano", "s": "Vaccinium myrtillus", "u": ["vista", "antioxidante", "circulación", "diarrea"]}, {"id": "valeriana-pilosa", "n": "Valeriana andina", "s": "Valeriana pilosa", "u": ["sedative"]}, {"id": "valeriana-andina", "n": "Valeriana", "s": "Valeriana pinnatifida", "u": ["insomnio", "ansiedad", "nervios", "estrés"]}, {"id": "vanilla-planifolia", "n": "Vainilla", "s": "Vanilla planifolia", "u": ["anxiolytic"]}, {"id": "vasconcellea-pubescens", "n": "Papayuela", "s": "Vasconcellea pubescens", "u": ["digestive"]}, {"id": "verbena-officinalis", "n": "Verbena", "s": "Verbena officinalis", "u": ["febrifuge"]}, {"id": "verbesina-crocata", "n": "Capitaneja", "s": "Verbesina crocata", "u": ["wound-healing"]}, {"id": "virola-sebifera", "n": "Ucuuba", "s": "Virola sebifera", "u": ["anti-inflammatory"]}, {"id": "virola-surinamensis", "n": "Virola", "s": "Virola surinamensis", "u": ["entheogen"]}, {"id": "virola-theiodora", "n": "Epená", "s": "Virola theiodora", "u": ["entheogen"]}, {"id": "vismia-guianensis", "n": "Lacre", "s": "Vismia guianensis", "u": ["antifungal"]}, {"id": "waltheria-indica", "n": "Malva de caballo", "s": "Waltheria indica", "u": ["expectorant"]}, {"id": "werneria-nubigena", "n": "Pupusa", "s": "Werneria nubigena", "u": ["antirheumatic"]}, {"id": "wigandia-urens", "n": "Mala mujer", "s": "Wigandia urens", "u": ["anti-inflammatory"]}, {"id": "xanthosoma-sagittifolium", "n": "Malanga", "s": "Xanthosoma sagittifolium", "u": ["emollient"]}, {"id": "xenophyllum-poposum", "n": "Pupusa de puna", "s": "Xenophyllum poposum", "u": ["respiratory"]}, {"id": "zea-mays", "n": "Maíz (pelos)", "s": "Zea mays", "u": ["diuretic"]}, {"id": "jengibre", "n": "Jengibre", "s": "Zingiber officinale", "u": ["náuseas", "digestivo", "antiinflamatorio", "resfriados"]}]</script>
 <script>
 (function() {
   'use strict';
@@ -6741,6 +6836,52 @@ p + p { margin-top: var(--sp-sm); }
     if (!img) return;
     var full = img.dataset.full || img.src;
     open(full, img.alt || '');
+  });
+})();
+
+/* Search */
+(function() {
+  var input = document.querySelector('.search-input');
+  if (!input) return;
+  var results = document.querySelector('.search-results');
+  var data = null;
+  var cssRoot = input.dataset.root || '';
+
+  function load(cb) {
+    if (data) return cb();
+    var s = document.getElementById('search-data');
+    if (s) { data = JSON.parse(s.textContent); cb(); }
+  }
+
+  function normalize(s) {
+    return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  input.addEventListener('input', function() {
+    load(function() {
+      var q = normalize(input.value.trim());
+      if (q.length < 2) { results.classList.remove('active'); return; }
+      var matches = data.filter(function(p) {
+        return normalize(p.n).indexOf(q) >= 0 ||
+               normalize(p.s).indexOf(q) >= 0 ||
+               (p.u && p.u.some(function(u) { return normalize(u).indexOf(q) >= 0; }));
+      }).slice(0, 8);
+      if (!matches.length) { results.classList.remove('active'); return; }
+      results.innerHTML = matches.map(function(p) {
+        return '<a class="search-result" href="' + cssRoot + 'plantas/' + p.id + '/">'
+          + '<div class="sr-name">' + p.n + '</div>'
+          + '<div class="sr-latin">' + p.s + '</div></a>';
+      }).join('');
+      results.classList.add('active');
+    });
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-box')) results.classList.remove('active');
+  });
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { results.classList.remove('active'); input.blur(); }
   });
 })();
 </script>

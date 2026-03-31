@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Cálculos renales — Yerbateca</title>
 <meta name="description" content="Plantas medicinales con propiedades para cálculos renales.">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <link rel="canonical" href="https://yerbateca.com/condiciones/calculos-renales/">
 <meta property="og:title" content="Cálculos renales">
 <meta property="og:description" content="Plantas medicinales con propiedades para cálculos renales.">
@@ -843,6 +843,139 @@ p + p { margin-top: var(--sp-sm); }
   .stats-row { flex-direction: column; gap: var(--sp-md); }
 }
 
+/* ── Search ── */
+.search-box {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto var(--sp-xl);
+}
+.search-box input {
+  width: 100%;
+  padding: var(--sp-sm) var(--sp-lg) var(--sp-sm) 2.5rem;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  background: var(--bg-card);
+  color: var(--ink);
+  outline: none;
+  transition: border-color var(--duration) var(--ease);
+}
+.search-box input:focus { border-color: var(--accent); }
+.search-box input::placeholder { color: var(--ink-faint); }
+.search-box .search-icon {
+  position: absolute;
+  left: var(--sp-md);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-faint);
+  width: 18px;
+  height: 18px;
+}
+.search-results {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  margin-top: var(--sp-xs);
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 200;
+  box-shadow: 0 8px 24px rgba(44,24,16,0.12);
+}
+.search-results.active { display: block; }
+.search-result {
+  display: block;
+  padding: var(--sp-sm) var(--sp-lg);
+  border-bottom: 1px solid var(--border-light);
+  transition: background var(--duration) var(--ease);
+}
+.search-result:last-child { border-bottom: none; }
+.search-result:hover { background: var(--bg-highlight); }
+.search-result .sr-name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--text-base);
+}
+.search-result .sr-latin {
+  font-family: var(--font-latin);
+  font-style: italic;
+  font-size: var(--text-sm);
+  color: var(--accent-sepia);
+}
+
+/* ── Alphabet Nav ── */
+.alpha-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px;
+  margin-bottom: var(--sp-lg);
+}
+.alpha-nav a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-family: var(--font-heading);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--ink-secondary);
+  transition: all var(--duration) var(--ease);
+}
+.alpha-nav a:hover { background: var(--bg-highlight); color: var(--ink); }
+.alpha-nav a.empty { opacity: 0.3; pointer-events: none; }
+.alpha-anchor { scroll-margin-top: 70px; }
+
+/* ── Prev/Next ── */
+.plant-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--sp-xl);
+  padding-top: var(--sp-lg);
+  border-top: 1px solid var(--border-light);
+  gap: var(--sp-md);
+}
+.plant-nav a {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  color: var(--ink-secondary);
+  font-size: var(--text-sm);
+  transition: color var(--duration) var(--ease);
+  max-width: 45%;
+}
+.plant-nav a:hover { color: var(--accent); }
+.plant-nav .pn-label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+}
+.plant-nav .pn-name {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--text-base);
+}
+.plant-nav .pn-next { text-align: right; }
+
+/* ── Plant mini-map ── */
+.plant-minimap {
+  max-width: 120px;
+  margin: var(--sp-sm) 0;
+}
+@media (max-width: 768px) {
+  .plant-minimap { max-width: 80px; }
+  .alpha-nav a { width: 28px; height: 28px; font-size: var(--text-xs); }
+}
+
 ::selection { background: var(--accent); color: var(--ink-inverse); }
 </style>
 </head>
@@ -866,7 +999,11 @@ p + p { margin-top: var(--sp-sm); }
       1 plantas medicinales con propiedades para cálculos renales.
     </p>
     <div class="plant-grid"><a href="../../plantas/chanca-piedra/" class="plant-card">
-  <div class="card-image"><div class="card-placeholder">&#9752;</div></div>
+  <div class="card-image">
+        <img src="../../assets/img/plantas/chanca-piedra/thumb.png"
+             alt="Ilustraci&oacute;n bot&aacute;nica de Chanca piedra"
+             loading="lazy" decoding="async">
+      </div>
   <div class="card-body">
     <div class="card-title">Chanca piedra</div>
     <div class="card-latin"><em>Phyllanthus niruri</em></div>
@@ -887,6 +1024,7 @@ p + p { margin-top: var(--sp-sm); }
   <p>Fuentes: PubMed, Scopus, Biodiversity Heritage Library</p>
   <p>La informaci&oacute;n es educativa y no sustituye consejo m&eacute;dico profesional.</p>
 </footer>
+
 <script>
 (function() {
   'use strict';
@@ -923,6 +1061,52 @@ p + p { margin-top: var(--sp-sm); }
     if (!img) return;
     var full = img.dataset.full || img.src;
     open(full, img.alt || '');
+  });
+})();
+
+/* Search */
+(function() {
+  var input = document.querySelector('.search-input');
+  if (!input) return;
+  var results = document.querySelector('.search-results');
+  var data = null;
+  var cssRoot = input.dataset.root || '';
+
+  function load(cb) {
+    if (data) return cb();
+    var s = document.getElementById('search-data');
+    if (s) { data = JSON.parse(s.textContent); cb(); }
+  }
+
+  function normalize(s) {
+    return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  input.addEventListener('input', function() {
+    load(function() {
+      var q = normalize(input.value.trim());
+      if (q.length < 2) { results.classList.remove('active'); return; }
+      var matches = data.filter(function(p) {
+        return normalize(p.n).indexOf(q) >= 0 ||
+               normalize(p.s).indexOf(q) >= 0 ||
+               (p.u && p.u.some(function(u) { return normalize(u).indexOf(q) >= 0; }));
+      }).slice(0, 8);
+      if (!matches.length) { results.classList.remove('active'); return; }
+      results.innerHTML = matches.map(function(p) {
+        return '<a class="search-result" href="' + cssRoot + 'plantas/' + p.id + '/">'
+          + '<div class="sr-name">' + p.n + '</div>'
+          + '<div class="sr-latin">' + p.s + '</div></a>';
+      }).join('');
+      results.classList.add('active');
+    });
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-box')) results.classList.remove('active');
+  });
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { results.classList.remove('active'); input.blur(); }
   });
 })();
 </script>

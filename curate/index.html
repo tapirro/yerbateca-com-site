@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yerbateca Illustration Curation</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #F0E8D8;
+            color: #2C1810;
+            padding: 20px;
+        }
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 { font-size: 2rem; margin-bottom: 1rem; color: #4A6741; }
+        .stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px; margin-bottom: 20px;
+        }
+        .stat-card {
+            background: #F5EFE2; padding: 15px; border-radius: 8px;
+            border: 1px solid #D4C4A8;
+        }
+        .stat-label { font-size: 0.85rem; color: #5C4A3A; }
+        .stat-value { font-size: 1.5rem; font-weight: bold; }
+        .toolbar {
+            display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
+        }
+        button, select, input {
+            padding: 10px 16px; border: 1px solid #BCA882;
+            border-radius: 6px; font-size: 0.9rem; cursor: pointer;
+            background: #F5EFE2; color: #2C1810;
+        }
+        button:hover { background: #E8E0CE; }
+        button.primary { background: #4A6741; color: white; border-color: #4A6741; }
+        button.primary:hover { background: #5D8251; }
+        button.success { background: #4A6741; color: white; }
+        button.skip { background: #A67B25; color: white; }
+        .gallery {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .illustration-card {
+            background: #F5EFE2; border-radius: 8px;
+            border: 1px solid #D4C4A8; overflow: hidden;
+        }
+        .illustration-card.matched { border-color: #4A6741; }
+        .illustration-card.skipped { opacity: 0.5; }
+        .img-container {
+            height: 200px; background: #EBE3D3; display: flex;
+            align-items: center; justify-content: center; overflow: hidden;
+        }
+        .img-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .card-body { padding: 12px; }
+        .filename { font-size: 0.8rem; color: #5C4A3A; word-break: break-all; margin-bottom: 8px; }
+        .match-info { font-size: 0.85rem; margin-top: 8px; }
+        .match-info select { width: 100%; margin-bottom: 8px; }
+        .status { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; }
+        .status.pending { background: #A67B25; color: white; }
+        .status.matched { background: #4A6741; color: white; }
+        .status.skipped { background: #8A7A6A; color: white; }
+        .card-actions { display: flex; gap: 8px; margin-top: 8px; }
+        .progress-bar {
+            height: 4px; background: #D4C4A8; margin-bottom: 20px; overflow: hidden;
+        }
+        .progress-fill { height: 100%; background: #4A6741; transition: width 0.3s; }
+        .filter-bar { background: #F5EFE2; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        .filter-bar label { margin-right: 10px; }
+        #export-data { display: none; }
+        .exported { color: #4A6741; }
+        .export-error { color: #8B3A2A; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Yerbateca Illustration Curation</h1>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Total Illustrations</div>
+                <div class="stat-value" id="total-count">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Unmatched</div>
+                <div class="stat-value" id="unmatched-count">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Matched (session)</div>
+                <div class="stat-value" id="matched-count">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Skipped</div>
+                <div class="stat-value" id="skipped-count">0</div>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+        </div>
+
+        <div class="toolbar">
+            <button class="primary" onclick="saveMatches()">💾 Save Matches</button>
+            <button onclick="exportMatches()">📤 Export JSON</button>
+            <button class="skip" onclick="skipAllVisible()">⏭️ Skip All Visible</button>
+            <button onclick="resetSession()">🔄 Reset Session</button>
+            <select id="filter-source" onchange="filterBySource()">
+                <option value="all">All Sources</option>
+            </select>
+        </div>
+
+        <div class="gallery" id="gallery"></div>
+    </div>
+
+    <textarea id="export-data"></textarea>
+
+    <script>
+        let illustrations = [];
+        let plants = [];
+        let sessionMatches = {};
+        let sessionSkipped = new Set();
+        let loadedExistingMatches = {};
+
+        async function loadData() {
+            try {
+                // Load illustrations
+                const illusResponse = await fetch('/curate/illustrations.json');
+                illustrations = await illusResponse.json();
+
+                // Load plants
+                const plantsResponse = await fetch('/data/kb_plants.json');
+                const plantsData = await plantsResponse.json();
+                plants = plantsData.plants || [];
+
+                // Load existing matches
+                try {
+                    const matchesResponse = await fetch('/data/yerbateca_illustration_matches_extended.json');
+                    loadedExistingMatches = await matchesResponse.json();
+                } catch (e) {
+                    console.log('No existing matches file');
+                }
+
+                // Update filter dropdown
+                updateSourceFilter();
+
+                renderGallery();
+                updateStats();
+            } catch (e) {
+                console.error('Error loading data:', e);
+                document.getElementById('gallery').innerHTML = '<p style="padding:20px">Error loading data. Make sure yerbateca site is running.</p>';
+            }
+        }
+
+        function updateSourceFilter() {
+            const sources = [...new Set(illustrations.map(i => i.source || 'unknown'))].sort();
+            const select = document.getElementById('filter-source');
+            const current = select.value;
+            select.innerHTML = '<option value="all">All Sources</option>';
+            sources.forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s;
+                opt.textContent = s;
+                select.appendChild(opt);
+            });
+            select.value = current;
+        }
+
+        function filterBySource() {
+            renderGallery();
+        }
+
+        function isMatched(filename) {
+            if (sessionMatches[filename]) return true;
+            if (sessionSkipped.has(filename)) return true;
+            for (const key in loadedExistingMatches) {
+                if (loadedExistingMatches[key]?.filename === filename) return true;
+            }
+            return false;
+        }
+
+        function renderGallery() {
+            const gallery = document.getElementById('gallery');
+            const filterSource = document.getElementById('filter-source').value;
+
+            let unmatched = illustrations.filter(i => !isMatched(i.filename));
+            if (filterSource !== 'all') {
+                unmatched = unmatched.filter(i => (i.source || 'unknown') === filterSource);
+            }
+
+            gallery.innerHTML = unmatched.map((ill, index) => {
+                const cardClass = (sessionMatches[ill.filename] ? 'matched' : '') +
+                               (sessionSkipped.has(ill.filename) ? 'skipped' : '');
+                const plantSelect = getPlantSelect(ill.filename);
+                const status = sessionMatches[ill.filename] ? 'matched' :
+                               sessionSkipped.has(ill.filename) ? 'skipped' : 'pending';
+
+                return `
+                    <div class="illustration-card ${cardClass}" data-filename="${ill.filename}">
+                        <div class="img-container">
+                            <img src="/curate/illustrations/${ill.filename}" alt="${ill.filename}" loading="lazy">
+                        </div>
+                        <div class="card-body">
+                            <div class="filename">${ill.filename}</div>
+                            <div class="match-info">
+                                <select onchange="selectPlant('${ill.filename}', this.value)">
+                                    <option value="">-- Select plant to match --</option>
+                                    ${plantSelect}
+                                </select>
+                            </div>
+                            <div class="card-actions">
+                                <button class="success" onclick="matchPlant('${ill.filename}')">✓ Match</button>
+                                <button class="skip" onclick="skipIllustration('${ill.filename}')">✗ Skip</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function getPlantSelect(currentMatch) {
+            const matchedValue = sessionMatches[currentMatch] || loadedExistingMatches[currentMatch]?.illustration || '';
+            return plants.map(p => {
+                const selected = matchedValue === p.id ? 'selected' : '';
+                const common = p.common_name || p.id;
+                const scientific = p.scientific_name || '';
+                return `<option value="${p.id}" ${selected}>${common} (${scientific})</option>`;
+            }).join('');
+        }
+
+        function selectPlant(filename, plantId) {
+            if (plantId) {
+                sessionMatches[filename] = plantId;
+                document.querySelector(`[data-filename="${filename}"]`)?.classList.add('matched');
+            }
+            updateStats();
+        }
+
+        function matchPlant(filename) {
+            const select = document.querySelector(`[data-filename="${filename}"] select`);
+            const plantId = select?.value;
+            if (plantId) {
+                sessionMatches[filename] = plantId;
+                renderGallery();
+                updateStats();
+            }
+        }
+
+        function skipIllustration(filename) {
+            sessionSkipped.add(filename);
+            renderGallery();
+            updateStats();
+        }
+
+        function skipAllVisible() {
+            document.querySelectorAll('.illustration-card:not(.matched):not(.skipped)').forEach(card => {
+                const filename = card.dataset.filename;
+                sessionSkipped.add(filename);
+            });
+            renderGallery();
+            updateStats();
+        }
+
+        function updateStats() {
+            const total = illustrations.length;
+            const unmatched = illustrations.filter(i => !isMatched(i.filename)).length;
+            const matched = Object.keys(sessionMatches).length;
+            const skipped = sessionSkipped.size;
+
+            document.getElementById('total-count').textContent = total;
+            document.getElementById('unmatched-count').textContent = unmatched;
+            document.getElementById('matched-count').textContent = matched;
+            document.getElementById('skipped-count').textContent = skipped;
+
+            const progress = total > 0 ? ((total - unmatched) / total * 100) : 0;
+            document.getElementById('progress-fill').style.width = progress + '%';
+        }
+
+        function saveMatches() {
+            const newMatches = Object.entries(sessionMatches).map(([filename, plantId]) => ({
+                illustration: plantId,
+                filename: filename,
+                source: 'manual_curation',
+                matched_at: new Date().toISOString().split('T')[0]
+            }));
+
+            if (newMatches.length === 0) {
+                alert('No new matches to save.');
+                return;
+            }
+
+            const dataStr = JSON.stringify(newMatches, null, 2);
+            document.getElementById('export-data').value = dataStr;
+            alert(`${newMatches.length} matches ready to export.\n\nCopy the JSON from the text area below and add to yerbateca_illustration_matches_extended.json, then run deploy_yerbateca_illustrations_v3.py`);
+        }
+
+        function exportMatches() {
+            saveMatches();
+            const data = document.getElementById('export-data');
+            data.style.display = 'block';
+            data.select();
+            document.execCommand('copy');
+            alert('Matches copied to clipboard!');
+            setTimeout(() => data.style.display = 'none', 5000);
+        }
+
+        function resetSession() {
+            if (confirm('Reset session? This will clear all temporary matches and skips.')) {
+                sessionMatches = {};
+                sessionSkipped = new Set();
+                renderGallery();
+                updateStats();
+            }
+        }
+
+        // Initialize
+        loadData();
+    </script>
+</body>
+</html>
