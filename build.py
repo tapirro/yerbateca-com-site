@@ -1,4 +1,3 @@
-from __future__ import annotations
 #!/usr/bin/env python3
 """
 Yerbateca Static Site Generator
@@ -883,139 +882,6 @@ p + p { margin-top: var(--sp-sm); }
   .stats-row { flex-direction: column; gap: var(--sp-md); }
 }
 
-/* ── Search ── */
-.search-box {
-  position: relative;
-  max-width: 480px;
-  margin: 0 auto var(--sp-xl);
-}
-.search-box input {
-  width: 100%;
-  padding: var(--sp-sm) var(--sp-lg) var(--sp-sm) 2.5rem;
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  border: 1px solid var(--border);
-  border-radius: 99px;
-  background: var(--bg-card);
-  color: var(--ink);
-  outline: none;
-  transition: border-color var(--duration) var(--ease);
-}
-.search-box input:focus { border-color: var(--accent); }
-.search-box input::placeholder { color: var(--ink-faint); }
-.search-box .search-icon {
-  position: absolute;
-  left: var(--sp-md);
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--ink-faint);
-  width: 18px;
-  height: 18px;
-}
-.search-results {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  margin-top: var(--sp-xs);
-  max-height: 320px;
-  overflow-y: auto;
-  z-index: 200;
-  box-shadow: 0 8px 24px rgba(44,24,16,0.12);
-}
-.search-results.active { display: block; }
-.search-result {
-  display: block;
-  padding: var(--sp-sm) var(--sp-lg);
-  border-bottom: 1px solid var(--border-light);
-  transition: background var(--duration) var(--ease);
-}
-.search-result:last-child { border-bottom: none; }
-.search-result:hover { background: var(--bg-highlight); }
-.search-result .sr-name {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: var(--text-base);
-}
-.search-result .sr-latin {
-  font-family: var(--font-latin);
-  font-style: italic;
-  font-size: var(--text-sm);
-  color: var(--accent-sepia);
-}
-
-/* ── Alphabet Nav ── */
-.alpha-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2px;
-  margin-bottom: var(--sp-lg);
-}
-.alpha-nav a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  font-family: var(--font-heading);
-  font-size: var(--text-sm);
-  font-weight: 600;
-  color: var(--ink-secondary);
-  transition: all var(--duration) var(--ease);
-}
-.alpha-nav a:hover { background: var(--bg-highlight); color: var(--ink); }
-.alpha-nav a.empty { opacity: 0.3; pointer-events: none; }
-.alpha-anchor { scroll-margin-top: 70px; }
-
-/* ── Prev/Next ── */
-.plant-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: var(--sp-xl);
-  padding-top: var(--sp-lg);
-  border-top: 1px solid var(--border-light);
-  gap: var(--sp-md);
-}
-.plant-nav a {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-sm);
-  color: var(--ink-secondary);
-  font-size: var(--text-sm);
-  transition: color var(--duration) var(--ease);
-  max-width: 45%;
-}
-.plant-nav a:hover { color: var(--accent); }
-.plant-nav .pn-label {
-  font-size: var(--text-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--ink-faint);
-}
-.plant-nav .pn-name {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: var(--text-base);
-}
-.plant-nav .pn-next { text-align: right; }
-
-/* ── Plant mini-map ── */
-.plant-minimap {
-  max-width: 120px;
-  margin: var(--sp-sm) 0;
-}
-@media (max-width: 768px) {
-  .plant-minimap { max-width: 80px; }
-  .alpha-nav a { width: 28px; height: 28px; font-size: var(--text-xs); }
-}
-
 ::selection { background: var(--accent); color: var(--ink-inverse); }
 """
 
@@ -1059,52 +925,6 @@ EMBEDDED_JS = """
     if (!img) return;
     var full = img.dataset.full || img.src;
     open(full, img.alt || '');
-  });
-})();
-
-/* Search */
-(function() {
-  var input = document.querySelector('.search-input');
-  if (!input) return;
-  var results = document.querySelector('.search-results');
-  var data = null;
-  var cssRoot = input.dataset.root || '';
-
-  function load(cb) {
-    if (data) return cb();
-    var s = document.getElementById('search-data');
-    if (s) { data = JSON.parse(s.textContent); cb(); }
-  }
-
-  function normalize(s) {
-    return s.toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g, '');
-  }
-
-  input.addEventListener('input', function() {
-    load(function() {
-      var q = normalize(input.value.trim());
-      if (q.length < 2) { results.classList.remove('active'); return; }
-      var matches = data.filter(function(p) {
-        return normalize(p.n).indexOf(q) >= 0 ||
-               normalize(p.s).indexOf(q) >= 0 ||
-               (p.u && p.u.some(function(u) { return normalize(u).indexOf(q) >= 0; }));
-      }).slice(0, 8);
-      if (!matches.length) { results.classList.remove('active'); return; }
-      results.innerHTML = matches.map(function(p) {
-        return '<a class="search-result" href="' + cssRoot + 'plantas/' + p.id + '/">'
-          + '<div class="sr-name">' + p.n + '</div>'
-          + '<div class="sr-latin">' + p.s + '</div></a>';
-      }).join('');
-      results.classList.add('active');
-    });
-  });
-
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.search-box')) results.classList.remove('active');
-  });
-
-  input.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { results.classList.remove('active'); input.blur(); }
   });
 })();
 """
@@ -1241,7 +1061,7 @@ def html_head(title: str, description: str, path: str = "", canonical: str | Non
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{escape(title)} — {SITE_NAME}</title>
 <meta name="description" content="{escape(description)}">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="{canon}">
 <meta property="og:title" content="{escape(title)}">
 <meta property="og:description" content="{escape(description)}">
@@ -1283,92 +1103,17 @@ def html_breadcrumb(items: list, css_root: str = "") -> str:
     return '<div class="breadcrumb">' + '<span class="sep">&#8250;</span>'.join(parts) + '</div>'
 
 
-def html_search_data(plants: list) -> str:
-    """Generate inline JSON search index for client-side search."""
-    index = []
-    for p in plants:
-        index.append({
-            "id": p["slug"],
-            "n": p["common_name"],
-            "s": p["scientific_name"],
-            "u": p.get("traditional_uses", [])[:5],
-        })
-    return '<script id="search-data" type="application/json">' + json.dumps(index, ensure_ascii=False) + '</script>'
-
-
-SEARCH_ICON_SVG = '<svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>'
-
-
-def html_search_box(css_root: str = "") -> str:
-    return f"""<div class="search-box">
-  {SEARCH_ICON_SVG}
-  <input type="text" class="search-input" placeholder="Buscar planta..." data-root="{css_root}" autocomplete="off">
-  <div class="search-results"></div>
-</div>"""
-
-
-def html_footer(plants: list | None = None) -> str:
-    search_data = html_search_data(plants) if plants else ''
+def html_footer() -> str:
     return f"""<footer class="site-footer">
   <div class="footer-brand">{SITE_NAME}</div>
   <p>{SITE_SUBTITLE}</p>
   <p>Fuentes: PubMed, Scopus, Biodiversity Heritage Library</p>
   <p>La informaci&oacute;n es educativa y no sustituye consejo m&eacute;dico profesional.</p>
 </footer>
-{search_data}
 <script>{EMBEDDED_JS}</script>
 </body>
 </html>
 """
-
-
-def html_plant_nav(prev_plant: dict | None, next_plant: dict | None, css_root: str = "../../") -> str:
-    """Generate prev/next navigation for plant pages."""
-    prev_html = ""
-    if prev_plant:
-        prev_html = f"""<a href="{css_root}plantas/{prev_plant["slug"]}/" style="flex:1;">
-      <div class="pn-label">&larr; Anterior</div>
-      <div class="pn-name">{escape(prev_plant["common_name"])}</div>
-    </a>"""
-    else:
-        prev_html = '<div style="flex:1;"></div>'
-
-    next_html = ""
-    if next_plant:
-        next_html = f"""<a href="{css_root}plantas/{next_plant["slug"]}/" style="flex:1;">
-      <div class="pn-label pn-next">Siguiente &rarr;</div>
-      <div class="pn-name pn-next">{escape(next_plant["common_name"])}</div>
-    </a>"""
-    else:
-        next_html = '<div style="flex:1;"></div>'
-
-    return f'<nav class="plant-nav">{prev_html}{next_html}</nav>'
-
-
-def html_jsonld(plant: dict) -> str:
-    """Generate JSON-LD structured data for a plant."""
-    data = {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "name": plant["common_name"],
-        "headline": f'{plant["common_name"]} ({plant["scientific_name"]})',
-        "description": f'{plant["common_name"]} - propiedades medicinales, usos tradicionales y evidencia cientifica.',
-        "about": {
-            "@type": "Drug",
-            "name": plant["common_name"],
-            "alternateName": plant["scientific_name"],
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "Yerbateca",
-            "url": SITE_URL,
-        },
-    }
-    if plant.get("active_compounds"):
-        data["about"]["activeIngredient"] = ", ".join(plant["active_compounds"][:5])
-    if plant.get("traditional_uses"):
-        data["about"]["indication"] = ", ".join(plant["traditional_uses"][:5])
-    return '<script type="application/ld+json">' + json.dumps(data, ensure_ascii=False) + '</script>'
 
 
 def html_section_icon(icon_id: str) -> str:
@@ -1389,7 +1134,7 @@ def html_section_icon(icon_id: str) -> str:
 def html_plant_card(plant: dict, css_root: str = "") -> str:
     if plant["has_illustration"]:
         img_html = f'''<div class="card-image">
-        <img src="{css_root}assets/img/plantas/{plant["slug"]}/thumb.png"
+        <img src="{css_root}assets/img/plants/{plant["slug"]}/thumb.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de {escape(plant["common_name"])}"
              loading="lazy" decoding="async">
       </div>'''
@@ -1461,7 +1206,6 @@ def generate_homepage(plants: list, conditions: dict, families: dict, regions: d
       de Am&eacute;rica Latina. Cada entrada incluye l&aacute;minas bot&aacute;nicas hist&oacute;ricas,
       clasificaci&oacute;n cient&iacute;fica, compuestos activos y evidencia contempor&aacute;nea.
     </p>
-    {html_search_box()}
   </header>
 
   <div class="stats-row">
@@ -1523,20 +1267,18 @@ def generate_homepage(plants: list, conditions: dict, families: dict, regions: d
   </div>
 </div>
 """
-    html += html_footer(plants)
+    html += html_footer()
     return html
 
 
-def generate_plant_page(plant: dict, plant_map: dict, conditions: dict, css_root: str = "../../",
-                        prev_plant: dict | None = None, next_plant: dict | None = None,
-                        all_plants: list | None = None) -> str:
+def generate_plant_page(plant: dict, plant_map: dict, conditions: dict, css_root: str = "../../") -> str:
     # Illustration plate (right column)
     plate_html = ""
     if plant["has_illustration"]:
         plate_html = f"""<aside class="mono-plate">
       <div class="ill-frame">
-        <img src="{css_root}assets/img/plantas/{plant["slug"]}/medium.png"
-             data-full="{css_root}assets/img/plantas/{plant["slug"]}/full.png"
+        <img src="{css_root}assets/img/plants/{plant["slug"]}/medium.png"
+             data-full="{css_root}assets/img/plants/{plant["slug"]}/full.png"
              alt="Ilustraci&oacute;n bot&aacute;nica de {escape(plant["scientific_name"])}"
              loading="lazy" decoding="async">
       </div>
@@ -1642,13 +1384,10 @@ def generate_plant_page(plant: dict, plant_map: dict, conditions: dict, css_root
   {html_breadcrumb([("Inicio", ""), ("Plantas", "plantas/"), (title, "")], css_root)}
 
   <article class="monograph content">
-    <header class="mono-header" style="display:flex;justify-content:space-between;align-items:start;">
-      <div>
-        <p class="mono-latin"><em>{escape(plant["scientific_name"])}</em></p>
-        <h1 class="mono-name">{escape(title)}</h1>
-        <div class="mono-regions">{region_tags}</div>
-      </div>
-      {('<div class="plant-minimap">' + render_region_map(highlight=plant["regions"][0] if plant["regions"] else None) + '</div>') if plant.get("regions") else ''}
+    <header class="mono-header">
+      <p class="mono-latin"><em>{escape(plant["scientific_name"])}</em></p>
+      <h1 class="mono-name">{escape(title)}</h1>
+      <div class="mono-regions">{region_tags}</div>
     </header>
 
     <div class="{body_class}"{grid_style}>
@@ -1668,62 +1407,30 @@ def generate_plant_page(plant: dict, plant_map: dict, conditions: dict, css_root
     </div>
 
     {related_html}
-
-    {html_plant_nav(prev_plant, next_plant, css_root)}
   </article>
 </div>
-{html_jsonld(plant)}
 """
-    html += html_footer(all_plants)
+    html += html_footer()
     return html
 
 
 def generate_plants_index(plants: list, css_root: str = "../") -> str:
-    sorted_plants = sorted(plants, key=lambda x: x["common_name"].lower())
-
-    # Build alphabetical navigation
-    letters_used = set()
-    for p in sorted_plants:
-        first = p["common_name"][0].upper() if p["common_name"] else "?"
-        letters_used.add(first)
-
-    alpha_links = ""
-    for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-        if letter in letters_used:
-            alpha_links += f'<a href="#letter-{letter}">{letter}</a>'
-        else:
-            alpha_links += f'<a class="empty">{letter}</a>'
-
-    # Build cards grouped by letter
-    cards_html = ""
-    current_letter = ""
-    for p in sorted_plants:
-        first = p["common_name"][0].upper() if p["common_name"] else "?"
-        if first != current_letter:
-            current_letter = first
-            cards_html += f'<div class="alpha-anchor" id="letter-{current_letter}" style="grid-column:1/-1;margin-top:var(--sp-lg);"><h3 style="color:var(--ink-muted);border-bottom:1px solid var(--border-light);padding-bottom:var(--sp-xs);">{current_letter}</h3></div>\n'
-        cards_html += html_plant_card(p, css_root) + "\n"
-
-    html = html_head("Plantas Medicinales", f"{len(plants)} plantas medicinales de Am\u00e9rica Latina", "plantas/")
+    cards = "\n".join(html_plant_card(p, css_root) for p in sorted(plants, key=lambda x: x["common_name"]))
+    html = html_head("Plantas Medicinales", f"{len(plants)} plantas medicinales de América Latina", "plantas/")
     html += html_nav(css_root)
     html += f"""
 <div class="site-wrapper">
   {html_breadcrumb([("Inicio", ""), ("Plantas", "")], css_root)}
   <div class="page-content" style="max-width:var(--max-width);">
     <h1>Plantas Medicinales</h1>
-    <p style="color:var(--ink-secondary);margin-bottom:var(--sp-md);">
+    <p style="color:var(--ink-secondary);margin-bottom:var(--sp-xl);">
       {len(plants)} monograf&iacute;as de plantas medicinales tradicionales de Am&eacute;rica Latina.
     </p>
-
-    {html_search_box(css_root)}
-
-    <div class="alpha-nav">{alpha_links}</div>
-
-    <div class="plant-grid">{cards_html}</div>
+    <div class="plant-grid">{cards}</div>
   </div>
 </div>
 """
-    html += html_footer(plants)
+    html += html_footer()
     return html
 
 
@@ -1990,14 +1697,9 @@ def build() -> None:
     write_file(os.path.join(SITE_DIR, "index.html"), generate_homepage(plants, conditions, families, regions))
 
     print("Generating plant pages...")
-    sorted_plants = sorted(plants, key=lambda x: x["common_name"].lower())
-    for i, p in enumerate(sorted_plants):
-        prev_p = sorted_plants[i - 1] if i > 0 else None
-        next_p = sorted_plants[i + 1] if i < len(sorted_plants) - 1 else None
+    for p in plants:
         path = os.path.join(SITE_DIR, "plantas", p["slug"], "index.html")
-        write_file(path, generate_plant_page(p, plant_map, conditions,
-                                             prev_plant=prev_p, next_plant=next_p,
-                                             all_plants=plants))
+        write_file(path, generate_plant_page(p, plant_map, conditions))
 
     write_file(os.path.join(SITE_DIR, "plantas", "index.html"), generate_plants_index(plants))
 
@@ -2023,7 +1725,7 @@ def build() -> None:
     write_file(os.path.join(SITE_DIR, "sobre", "index.html"), generate_about())
 
     write_file(os.path.join(SITE_DIR, "sitemap.xml"), generate_sitemap(plants, conditions, families, regions))
-    write_file(os.path.join(SITE_DIR, "robots.txt"), "User-agent: *\nAllow: /\n")
+    write_file(os.path.join(SITE_DIR, "robots.txt"), "User-agent: *\nDisallow: /\n")
 
     total = len(plants) + len(conditions) + len(families) + len(regions) + 6
     print(f"\nDone: {total} pages generated")
